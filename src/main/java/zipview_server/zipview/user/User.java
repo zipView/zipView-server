@@ -16,8 +16,9 @@ import java.util.UUID;
 public class User extends BaseEntity {
     @Id
     private String id;
-    @NotNull
+
     private String email;
+    private String name;
     private String password;
     private String nickname;
     private String phone;

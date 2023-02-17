@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 public class CreateUserReq extends BaseEntity{
     private String email;
+    private String name;
     private String nickname;
     private String phone;
     private String password;

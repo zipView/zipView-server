@@ -20,4 +20,8 @@ public class UserRepository {
         return em.createQuery("select u from User u where u.email = :email", User.class)
                 .setParameter("email",email).getResultList();
     }
+    public List<User> findByNickName(String nickname){
+        return em.createQuery("select u from User u where u.nickname = :nickname ", User.class)
+                .setParameter("nickname",nickname).getResultList();
+    }
 }
