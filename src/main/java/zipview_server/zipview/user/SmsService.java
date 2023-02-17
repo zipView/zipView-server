@@ -34,7 +34,6 @@ import java.util.Random;
 public class SmsService {
     private final String smsConfirmNum = createSmsKey();
 
-
     @Value("${naver-cloud-sms.accessKey}")
     private String accessKey;
 
@@ -91,7 +90,7 @@ public class SmsService {
                 .contentType("COMM")
                 .countryCode("82")
                 .from(phone)
-                .content("[ZIPVIEW] 인증번호 [" + smsConfirmNum + "] 를 입력해주세요")
+                .content("[집뷰] 인증번호 [" + smsConfirmNum + "] 를 입력해주세요")
                 .messages(messages)
                 .build();
 
@@ -104,8 +103,8 @@ public class SmsService {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
         //restTemplate로 post 요청 보내고 오류가 없으면 202코드 반환
-        SmsResponseDto smsResponseDto = restTemplate.postForObject(new URI("https://sens.apigw.ntruss.com/sms/v2/services/"+ serviceId +"/messages"), httpBody, SmsResponseDto.class);
-
+        SmsResponseDto smsResponseDto = restTemplate.postForObject(new URI("https://sens.apigw.ntruss.com/sms/v2/services/"+ serviceId +"/messages"), httpBody,SmsResponseDto.class);
+        smsResponseDto.setSmsConfirmNum(smsConfirmNum);
         // redisUtil.setDataExpire(smsConfirmNum, messageDto.getTo(), 60 * 3L); // 유효시간 3분
         return smsResponseDto;
     }
