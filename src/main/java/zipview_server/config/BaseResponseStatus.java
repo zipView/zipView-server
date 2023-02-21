@@ -15,10 +15,9 @@ public enum BaseResponseStatus {
      */
     EXIST_EMAIL(false,2001,"이미 존재하는 회원입니다."),
     INVALID_EMAIL(false,2002,"이메일 형식을 확인해주세요."),
-    EMPTY_EMAIL(false,2003,"이메일을 입력해주세요."),
-    EXIST_NICKNAME(false,2010,"이미 존재하는 닉네임입니다."),
-
-    INVALID_PWD(false,2021,"비밀번호 형식을 확인해주세요."),
+    EXIST_NICKNAME(false,2003,"이미 존재하는 닉네임입니다."),
+    INVALID_PWD(false,2004,"비밀번호 형식을 확인해주세요."),
+    INVALID_PHONE_NUMBER(false,2010,"형식에 맞지 않는 번호입니다."),
 
 
 

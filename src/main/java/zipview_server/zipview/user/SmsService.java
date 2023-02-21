@@ -70,7 +70,7 @@ public class SmsService {
 
         byte[] rawHmac = mac.doFinal(message.getBytes("UTF-8"));
         String encodeBase64String = Base64.encodeBase64String(rawHmac);
-
+        System.out.println("encodeBase64 = " + encodeBase64String);
         return encodeBase64String;
     }
     public SmsResponseDto sendSms(MessageDto messageDto) throws JsonProcessingException, RestClientException, URISyntaxException, InvalidKeyException, NoSuchAlgorithmException, UnsupportedEncodingException {
@@ -94,18 +94,14 @@ public class SmsService {
                 .messages(messages)
                 .build();
 
-        //쌓은 바디를 json형태로 반환
         ObjectMapper objectMapper = new ObjectMapper();
         String body = objectMapper.writeValueAsString(request);
-        // jsonBody와 헤더 조립
         HttpEntity<String> httpBody = new HttpEntity<>(body, headers);
 
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());
-        //restTemplate로 post 요청 보내고 오류가 없으면 202코드 반환
         SmsResponseDto smsResponseDto = restTemplate.postForObject(new URI("https://sens.apigw.ntruss.com/sms/v2/services/"+ serviceId +"/messages"), httpBody,SmsResponseDto.class);
         smsResponseDto.setSmsConfirmNum(smsConfirmNum);
-        // redisUtil.setDataExpire(smsConfirmNum, messageDto.getTo(), 60 * 3L); // 유효시간 3분
         return smsResponseDto;
     }
 

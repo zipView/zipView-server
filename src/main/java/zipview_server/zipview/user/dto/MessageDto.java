@@ -1,9 +1,9 @@
 package zipview_server.zipview.user.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @AllArgsConstructor
 @RequiredArgsConstructor
@@ -11,4 +11,5 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public class MessageDto {
     private String to;
+
 }

@@ -1,22 +1,17 @@
-package zipview_server.zipview.user;
+package zipview_server.zipview.user.dto;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
 import lombok.Getter;
 import lombok.Setter;
-import zipview_server.zipview.user.dto.BaseEntity;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.UUID;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 public class User extends BaseEntity {
     @Id
     private String id;
-
     private String email;
     private String name;
     private String password;

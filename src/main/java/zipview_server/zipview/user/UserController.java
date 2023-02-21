@@ -9,22 +9,22 @@ import zipview_server.config.BaseResponse;
 import static zipview_server.config.BaseResponseStatus.*;
 
 import zipview_server.utils.EmailRegex;
-import zipview_server.utils.Encrypt;
-import zipview_server.utils.PhoneRegex;
 import zipview_server.utils.PwdRegex;
-import zipview_server.zipview.user.dto.CreateUserReq;
-import zipview_server.zipview.user.dto.CreateUserRes;
+import zipview_server.zipview.user.dto.*;
+
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final UserRepository userRepository;
 
     @PostMapping("/new")
-    public BaseResponse<CreateUserRes> saveUser(@RequestBody @Valid CreateUserReq createUserReq) throws BaseException {
+    public BaseResponse<CreateUserRes> saveUser(@RequestBody @Valid CreateUserReq createUserReq)  {
         try {
             User user = new User();
             String uuid = UUID.randomUUID().toString();
@@ -51,6 +51,17 @@ public class UserController {
             return new BaseResponse<>(exception.getStatus());
         }
 
+    }
+
+    @PostMapping("/findEmail")
+    public BaseResponse<PostUserIdRes> findEmail(@RequestBody PostUserIdReq postUserIdReq) {
+        try {
+            String email = userRepository.GetUserEmail(postUserIdReq);
+
+            return new BaseResponse<>(new PostUserIdRes(email));
+        }catch (BaseException e) {
+            return new BaseResponse<>(e.getStatus());
+        }
     }
 
 

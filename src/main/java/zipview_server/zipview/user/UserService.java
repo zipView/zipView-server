@@ -4,12 +4,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import zipview_server.config.BaseException;
 import zipview_server.utils.Encrypt;
-import zipview_server.utils.PwdRegex;
+import zipview_server.zipview.user.dto.MessageDto;
+import zipview_server.zipview.user.dto.PostUserIdReq;
+import zipview_server.zipview.user.dto.PostUserIdRes;
+import zipview_server.zipview.user.dto.User;
 
 
 import java.util.List;
 
-import static org.apache.tomcat.util.net.openssl.ciphers.Encryption.AES128;
 import static zipview_server.config.BaseResponseStatus.*;
 
 @Service
@@ -36,6 +38,9 @@ public class UserService {
         userRepository.save(user);
         return user.getId();
     }
+
+
+
     private void validateDuplicateMember(User user) throws BaseException {
         List<User> findUser = userRepository.findByEmail(user.getEmail());
         if(!findUser.isEmpty()) {

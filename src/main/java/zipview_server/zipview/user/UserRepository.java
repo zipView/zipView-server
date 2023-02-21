@@ -1,6 +1,9 @@
 package zipview_server.zipview.user;
 
 import org.springframework.stereotype.Repository;
+import zipview_server.config.BaseException;
+import zipview_server.zipview.user.dto.PostUserIdReq;
+import zipview_server.zipview.user.dto.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,6 +17,14 @@ public class UserRepository {
 
     public void save(User user) {
         em.persist(user);
+    }
+
+    public String GetUserEmail(PostUserIdReq postUserIdReq) throws BaseException {
+        String name = postUserIdReq.getName();
+        String phone = postUserIdReq.getPhone();
+        return em.createQuery("select u.email from User u where u.name= :name and u.phone= :phone")
+                .setParameter("name", name)
+                .setParameter("phone", phone).getSingleResult().toString();
     }
 
     public List<User> findByEmail(String email) {
