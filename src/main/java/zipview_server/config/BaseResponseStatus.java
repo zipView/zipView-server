@@ -17,6 +17,7 @@ public enum BaseResponseStatus {
     INVALID_EMAIL(false,2002,"이메일 형식을 확인해주세요."),
     EXIST_NICKNAME(false,2003,"이미 존재하는 닉네임입니다."),
     INVALID_PWD(false,2004,"비밀번호 형식을 확인해주세요."),
+    NON_EXIST_MEMBER(false,2005,"존재하지않는 회원입니다."),
     INVALID_PHONE_NUMBER(false,2010,"형식에 맞지 않는 번호입니다."),
 
 
@@ -30,7 +31,8 @@ public enum BaseResponseStatus {
     /**
      * 4000 : Database, Server 오류
      */
-    FAIL_ENCRYPT_PWD(false,4000,"비밀번호 암호화에 실패하였습니다.");
+    DATABASE_ERROR(false,4000,"데이터베이스 연결 오류"),
+    FAIL_ENCRYPT_PWD(false,4001,"비밀번호 암호화에 실패하였습니다.");
 
 
     private final boolean isSuccess;

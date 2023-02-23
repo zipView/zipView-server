@@ -6,6 +6,7 @@ import zipview_server.zipview.user.dto.PostUserIdReq;
 import zipview_server.zipview.user.dto.User;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class UserRepository {
         em.persist(user);
     }
 
-    public String GetUserEmail(PostUserIdReq postUserIdReq) throws BaseException {
+    public String GetUserEmail(PostUserIdReq postUserIdReq) throws NoResultException {
         String name = postUserIdReq.getName();
         String phone = postUserIdReq.getPhone();
         return em.createQuery("select u.email from User u where u.name= :name and u.phone= :phone")
@@ -35,4 +36,6 @@ public class UserRepository {
         return em.createQuery("select u from User u where u.nickname = :nickname ", User.class)
                 .setParameter("nickname",nickname).getResultList();
     }
+
+
 }
