@@ -1,14 +1,10 @@
 package zipview_server.zipview.user;
 
-import ch.qos.logback.core.encoder.EchoEncoder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -18,18 +14,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import zipview_server.config.BaseException;
+import zipview_server.utils.Decrypt;
 import zipview_server.utils.Encrypt;
+import zipview_server.zipview.user.dto.JwtService;
 import zipview_server.zipview.user.dto.*;
 
 
-import java.io.*;
-import java.math.BigInteger;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.security.SecureRandom;
 import java.util.List;
 
 import static zipview_server.config.BaseResponseStatus.*;
@@ -38,14 +30,19 @@ import static zipview_server.config.BaseResponseStatus.*;
 @Slf4j
 @Transactional(readOnly = true)
 public class UserService {
-    final UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final JwtService jwtService;
+
     @Value("${naver-login.secretkey}")
     private String secretKey;
     @Value("${naver-login.clientId}")
     private String clientId;
-    public UserService(UserRepository userRepository) {
+
+    public UserService(UserRepository userRepository, JwtService jwtService) {
         this.userRepository = userRepository;
+        this.jwtService = jwtService;
     }
+
 
     @Transactional
     public String join(User user) throws BaseException {
@@ -67,6 +64,26 @@ public class UserService {
         validateExistNickname(user);
         userRepository.save(user);
         return user.getId();
+    }
+
+    @Transactional
+    public PostLoginRes login(PostLoginReq postLoginReq) throws Exception {
+        String repoPwd = userRepository.GetRepoPwd(postLoginReq.getEmail());
+        String repoId = userRepository.GetRepoId(postLoginReq.getEmail());
+        String pwd;
+        try{
+            pwd = Decrypt.decryptAES256(repoPwd);
+        } catch (Exception e) {
+            throw new BaseException(FAIL_DECRYPT_PWD);
+        }
+
+        if(postLoginReq.getPassword().equals(pwd)){
+            String jwt = jwtService.createJwt(repoId);
+            return new PostLoginRes(jwt);
+        }
+        else {
+            throw new BaseException(FAIL_TO_LOGIN);
+        }
     }
 
     public User socialLogin(String code, String state) {
@@ -119,7 +136,8 @@ public class UserService {
         String id = element.getAsJsonObject().get("response").getAsJsonObject().get("id").getAsString();
         String name = element.getAsJsonObject().get("response").getAsJsonObject().get("name").getAsString();
         String phone = element.getAsJsonObject().get("response").getAsJsonObject().get("mobile").getAsString();
-        User user = new User(email,nickname,id,name,phone);
+        String provider = "K";
+        User user = new User(id,email,nickname,name,phone,provider);
         log.info(String.valueOf(user));
         return user;
     }
@@ -137,5 +155,6 @@ public class UserService {
             throw new BaseException(EXIST_NICKNAME);
         }
     }
+
 
 }

@@ -19,6 +19,7 @@ public enum BaseResponseStatus {
     INVALID_PWD(false,2004,"비밀번호 형식을 확인해주세요."),
     NON_EXIST_MEMBER(false,2005,"존재하지않는 회원입니다."),
     INVALID_PHONE_NUMBER(false,2010,"형식에 맞지 않는 번호입니다."),
+    FAIL_TO_LOGIN(false,2011,"로그인에 실패하였습니다."),
 
 
 
@@ -26,13 +27,15 @@ public enum BaseResponseStatus {
     /**
      * 3000 : Response 오류
      */
-
+    EMPTY_JWT(false,3001,"jwt가 없습니다."),
+    INVALID_JWT(false,3002,"유효하지 않는 jwt 입니다."),
 
     /**
      * 4000 : Database, Server 오류
      */
     DATABASE_ERROR(false,4000,"데이터베이스 연결 오류"),
-    FAIL_ENCRYPT_PWD(false,4001,"비밀번호 암호화에 실패하였습니다.");
+    FAIL_ENCRYPT_PWD(false,4001,"비밀번호 암호화에 실패하였습니다."),
+    FAIL_DECRYPT_PWD(false,4002,"비밀번호 복호화에 실패하였습니다.");
 
 
     private final boolean isSuccess;

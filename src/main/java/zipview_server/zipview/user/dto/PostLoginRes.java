@@ -5,6 +5,6 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class PostUserIdRes {
-    private String id;
+public class PostLoginRes {
+    private String jwt;
 }

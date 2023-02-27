@@ -1,42 +1,23 @@
 package zipview_server.zipview.user;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.server.reactive.HttpHandler;
-import org.springframework.ui.Model;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 import zipview_server.config.BaseException;
 import zipview_server.config.BaseResponse;
 import static zipview_server.config.BaseResponseStatus.*;
 
 import zipview_server.utils.EmailRegex;
+import zipview_server.zipview.user.dto.JwtService;
 import zipview_server.utils.PwdRegex;
 import zipview_server.zipview.user.dto.*;
 
 
 import javax.persistence.NoResultException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import javax.validation.constraints.Null;
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.math.BigInteger;
 import java.security.SecureRandom;
-import java.text.ParseException;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -45,6 +26,7 @@ import java.util.UUID;
 public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
+    private final JwtService jwtService;
 
     @Value("${naver-login.secretkey}")
     private String secretKey;
@@ -71,6 +53,7 @@ public class UserController {
             user.setName(createUserReq.getName());
             user.setNickname(createUserReq.getNickname());
             user.setPhone(createUserReq.getPhone());
+            user.setProvider("E");
 
             user.setPassword(createUserReq.getPassword());
             String id = userService.join(user);
@@ -128,6 +111,23 @@ public class UserController {
         String id =userService.socialJoin(socialUser);
         return new BaseResponse<>(new PostUserIdRes(id));
     }
+
+    /**
+     * 로그인
+     */
+    @PostMapping("/login")
+    public BaseResponse<PostLoginRes>login(@RequestBody PostLoginReq postLoginReq) {
+      try {
+          PostLoginRes postLoginRes = userService.login(postLoginReq);
+          return new BaseResponse<>(postLoginRes);
+      } catch (BaseException e) {
+          return new BaseResponse<>(e.getStatus());
+      } catch (Exception e) {
+          throw new RuntimeException(e);
+      }
+    }
+
+
 
 
 
