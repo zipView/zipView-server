@@ -1,4 +1,4 @@
-package zipview_server.zipview.user.dto;
+package zipview_server.zipview.sender.Dto;
 
 import lombok.*;
 
@@ -11,5 +11,4 @@ import javax.persistence.Id;
 @Getter
 public class MessageDto {
     private String to;
-
 }

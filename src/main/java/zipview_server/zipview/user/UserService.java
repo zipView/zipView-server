@@ -138,7 +138,6 @@ public class UserService {
         String phone = element.getAsJsonObject().get("response").getAsJsonObject().get("mobile").getAsString();
         String provider = "K";
         User user = new User(id,email,nickname,name,phone,provider);
-        log.info(String.valueOf(user));
         return user;
     }
 

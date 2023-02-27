@@ -2,6 +2,7 @@ package zipview_server.zipview.user;
 
 import org.springframework.stereotype.Repository;
 import zipview_server.config.BaseException;
+import zipview_server.zipview.user.dto.PatchPwdReq;
 import zipview_server.zipview.user.dto.PostLoginReq;
 import zipview_server.zipview.user.dto.PostUserIdReq;
 import zipview_server.zipview.user.dto.User;
@@ -38,6 +39,13 @@ public class UserRepository {
                 .setParameter("email",email)
                 .getSingleResult().toString();
     }
+    public String ExistUser(PatchPwdReq patchPwdReq) throws NoResultException {
+        return em.createQuery("select u.email from User u where u.email= :email and u.name = :name and u.phone = :phone")
+                .setParameter("email", patchPwdReq.getEmail())
+                .setParameter("name",patchPwdReq.getName())
+                .setParameter("phone",patchPwdReq.getPhone())
+                .getSingleResult().toString();
+    }
 
     public List<User> findByEmail(String email) {
         return em.createQuery("select u from User u where u.email = :email", User.class)
@@ -46,6 +54,17 @@ public class UserRepository {
     public List<User> findByNickName(String nickname){
         return em.createQuery("select u from User u where u.nickname = :nickname ", User.class)
                 .setParameter("nickname",nickname).getResultList();
+    }
+
+    public String findId(String name, String email){
+        return em.createQuery("select u.id from User u where u.name= :name and u.email= :email")
+                .setParameter("name",name)
+                .setParameter("email",email).getSingleResult().toString();
+
+    }
+
+    public User findOne(String id) {
+        return em.find(User.class,id);
     }
 
 

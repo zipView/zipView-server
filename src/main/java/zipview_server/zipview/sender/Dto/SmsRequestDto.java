@@ -1,7 +1,8 @@
-package zipview_server.zipview.user.dto;
+package zipview_server.zipview.sender.Dto;
 
 
 import lombok.*;
+import zipview_server.zipview.sender.Dto.MessageDto;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package zipview_server.zipview.user.dto;
+package zipview_server.zipview.sender.Dto;
 
 import lombok.*;
 
