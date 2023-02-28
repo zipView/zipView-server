@@ -2,6 +2,7 @@ package zipview_server.zipview.user;
 
 import org.springframework.stereotype.Repository;
 import zipview_server.config.BaseException;
+import zipview_server.zipview.sender.Dto.PostEmailReq;
 import zipview_server.zipview.user.dto.PatchPwdReq;
 import zipview_server.zipview.user.dto.PostLoginReq;
 import zipview_server.zipview.user.dto.PostUserIdReq;
@@ -39,11 +40,11 @@ public class UserRepository {
                 .setParameter("email",email)
                 .getSingleResult().toString();
     }
-    public String ExistUser(PatchPwdReq patchPwdReq) throws NoResultException {
+    public String ExistUser(PostEmailReq postEmailReq) throws NoResultException {
         return em.createQuery("select u.email from User u where u.email= :email and u.name = :name and u.phone = :phone")
-                .setParameter("email", patchPwdReq.getEmail())
-                .setParameter("name",patchPwdReq.getName())
-                .setParameter("phone",patchPwdReq.getPhone())
+                .setParameter("email", postEmailReq.getEmail())
+                .setParameter("name",postEmailReq.getName())
+                .setParameter("phone",postEmailReq.getPhone())
                 .getSingleResult().toString();
     }
 

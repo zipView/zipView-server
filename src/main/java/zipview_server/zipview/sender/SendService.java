@@ -137,12 +137,12 @@ public class SendService {
     }
 
     @Transactional
-    public String sendSimpleMessage(PostEmailReq postEmailReq)throws Exception {
+    public PostEmailRes sendSimpleMessage(PostEmailReq postEmailReq)throws Exception {
         MimeMessage message = createMessage(postEmailReq.getEmail());
         try{
             javaMailSender.send(message); // 메일 발송
             String newPwd = Encrypt.encryptAES256(ePw);
-            log.info(newPwd);
+
             String id = userRepository.findId(postEmailReq.getName(), postEmailReq.getEmail());
             User user = userRepository.findOne(id);
             user.setPassword(newPwd);
@@ -151,8 +151,8 @@ public class SendService {
             es.printStackTrace();
             throw new IllegalArgumentException();
         }
-
-        return ePw; // 메일로 보냈던 인증 코드를 서버로 리턴
+        PostEmailRes result = new PostEmailRes(ePw);
+        return result; // 메일로 보냈던 인증 코드를 서버로 리턴
     }
     public MimeMessage createMessage(String to)throws MessagingException, UnsupportedEncodingException {
         MimeMessage  message = javaMailSender.createMimeMessage();

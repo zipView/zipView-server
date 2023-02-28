@@ -128,28 +128,6 @@ public class UserController {
       }
     }
 
-    /**
-     * 비밀번호 찾기
-     * 이메일, 이름, 휴대폰번호 받아서 존재하는 회원인지 판별.
-     */
-    @PostMapping("/findPwd")
-    public BaseResponse<String> findMyPwd(@RequestBody PatchPwdReq patchPwdReq) {
-        try {
-            String email = userRepository.ExistUser(patchPwdReq);
-            if(!email.isEmpty()){
-                String result = "메일 전송 가능한 회원";
-                return new BaseResponse<>(result);
-            }
-            else{
-                String result = "메일 전송 불가";
-                return new BaseResponse<>(result);
-            }
-        }catch (NoResultException e) {
-            return new BaseResponse<>(NON_EXIST_MEMBER);
-        }
-
-    }
-
 
 
 

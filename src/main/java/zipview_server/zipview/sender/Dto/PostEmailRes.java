@@ -5,8 +5,6 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class PostEmailReq {
-    private String email;
-    private String name;
-    private String phone;
+public class PostEmailRes {
+    private String tempPwd;
 }

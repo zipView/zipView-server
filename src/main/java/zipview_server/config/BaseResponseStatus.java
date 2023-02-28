@@ -29,6 +29,7 @@ public enum BaseResponseStatus {
      */
     EMPTY_JWT(false,3001,"jwt가 없습니다."),
     INVALID_JWT(false,3002,"유효하지 않는 jwt 입니다."),
+    NON_EXIST_USER_TO_EMAIL(false, 3003,"존재하지 않는 회원입니다."),
 
     /**
      * 4000 : Database, Server 오류
