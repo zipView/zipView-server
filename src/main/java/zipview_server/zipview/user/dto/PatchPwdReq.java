@@ -6,7 +6,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class PatchPwdReq {
-    private String name;
-    private String email;
-    private String phone;
+    private String currentPwd;
+    private String newPwd;
 }

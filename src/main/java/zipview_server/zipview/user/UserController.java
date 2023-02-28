@@ -1,5 +1,6 @@
 package zipview_server.zipview.user;
 
+import io.jsonwebtoken.Jwt;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -8,8 +9,9 @@ import zipview_server.config.BaseException;
 import zipview_server.config.BaseResponse;
 import static zipview_server.config.BaseResponseStatus.*;
 
+import zipview_server.utils.Decrypt;
 import zipview_server.utils.EmailRegex;
-import zipview_server.zipview.user.dto.JwtService;
+import zipview_server.utils.Encrypt;
 import zipview_server.utils.PwdRegex;
 import zipview_server.zipview.user.dto.*;
 
@@ -18,7 +20,6 @@ import javax.persistence.NoResultException;
 import javax.validation.Valid;
 import java.math.BigInteger;
 import java.security.SecureRandom;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -28,6 +29,9 @@ public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
     private final JwtService jwtService;
+
+
+
 
     @Value("${naver-login.secretkey}")
     private String secretKey;
@@ -128,7 +132,38 @@ public class UserController {
       }
     }
 
+    /**
+     * 비밀번호 바꾸기
+     */
+    @PatchMapping("/changepwd")
+    public BaseResponse<String> changePwd(@RequestParam("id") String id,@RequestBody PatchPwdReq patchPwdReq) throws Exception {
+        try {
+            String userId = jwtService.getUserId();
+            if(jwtService.getJwt().isEmpty()){
+                return new BaseResponse<>(EMPTY_JWT);
+            }
+            String token = jwtService.getJwt();
 
+            if (jwtService.validateToken(token) && userId.equals(id)) {
+                String repoPwd = Decrypt.decryptAES256(userRepository.GetRepoPwdById(id));
+                if (patchPwdReq.getCurrentPwd().equals(repoPwd)) {
+                    if(!PwdRegex.isRegexPwd(patchPwdReq.getNewPwd())){
+                        return new BaseResponse<>(INVALID_PWD);
+                    }
+                    userService.updateUserPwd(id, patchPwdReq.getNewPwd());
+                } else {
+                    return new BaseResponse<>(NOT_MATCH_USER_PWD);
+                }
+            } else {
+                return new BaseResponse<>(INVALID_JWT);
+            }
+            return new BaseResponse<>("비밀번호를 변경하였습니다.");
+        } catch (BaseException e) {
+            return new BaseResponse<>(e.getStatus());
+        }
+
+
+    }
 
 
 

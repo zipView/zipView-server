@@ -16,9 +16,10 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import zipview_server.config.BaseException;
+import zipview_server.config.BaseResponse;
 import zipview_server.utils.Decrypt;
 import zipview_server.utils.Encrypt;
-import zipview_server.zipview.user.dto.JwtService;
+import zipview_server.utils.PwdRegex;
 import zipview_server.zipview.user.dto.*;
 
 
@@ -83,6 +84,17 @@ public class UserService {
         }
         else {
             throw new BaseException(FAIL_TO_LOGIN);
+        }
+    }
+
+    public void updateUserPwd(String id, String pwd) throws BaseException {
+        try {
+            String newPwd = Encrypt.encryptAES256(pwd);
+            User user = userRepository.findOne(id);
+            user.setPassword(newPwd);
+            userRepository.save(user);
+        }catch (Exception e) {
+            throw new BaseException(FAIL_TO_CHANGE_PWD);
         }
     }
 

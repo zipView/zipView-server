@@ -20,6 +20,7 @@ public enum BaseResponseStatus {
     NON_EXIST_MEMBER(false,2005,"존재하지않는 회원입니다."),
     INVALID_PHONE_NUMBER(false,2010,"형식에 맞지 않는 번호입니다."),
     FAIL_TO_LOGIN(false,2011,"로그인에 실패하였습니다."),
+    FAIL_TO_CHANGE_PWD(false, 2012, "비밀번호 변경에 실패하였습니다."),
 
 
 
@@ -30,6 +31,7 @@ public enum BaseResponseStatus {
     EMPTY_JWT(false,3001,"jwt가 없습니다."),
     INVALID_JWT(false,3002,"유효하지 않는 jwt 입니다."),
     NON_EXIST_USER_TO_EMAIL(false, 3003,"존재하지 않는 회원입니다."),
+    NOT_MATCH_USER_PWD(false,3004,"비밀번호가 일치하지 않습니다."),
 
     /**
      * 4000 : Database, Server 오류
