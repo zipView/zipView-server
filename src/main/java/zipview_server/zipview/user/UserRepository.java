@@ -60,6 +60,10 @@ public class UserRepository {
         return em.createQuery("select u from User u where u.nickname = :nickname ", User.class)
                 .setParameter("nickname",nickname).getResultList();
     }
+    public List<User> findById(String id) {
+        return em.createQuery("select u from User u where u.id = :id", User.class)
+                .setParameter("id",id).getResultList();
+    }
 
     public String findId(String name, String email){
         return em.createQuery("select u.id from User u where u.name= :name and u.email= :email")

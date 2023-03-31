@@ -87,6 +87,18 @@ public class UserService {
         }
     }
 
+    @Transactional
+    public void updateNickname(String id,PatchInfo patchInfo) throws BaseException {
+        try {
+            User user = userRepository.findOne(id);
+            user.setNickname(patchInfo.getNickname());
+            userRepository.save(user);
+        }catch (Exception e){
+            throw new BaseException(FAIL_TO_CHANGE_PWD);
+        }
+    }
+
+    @Transactional
     public void updateUserPwd(String id, String pwd) throws BaseException {
         try {
             String newPwd = Encrypt.encryptAES256(pwd);
@@ -95,6 +107,32 @@ public class UserService {
             userRepository.save(user);
         }catch (Exception e) {
             throw new BaseException(FAIL_TO_CHANGE_PWD);
+        }
+    }
+
+    @Transactional
+    public void withdrawMember(String id) throws BaseException {
+        try{
+            User user = userRepository.findOne(id);
+            user.setIsDeleted("Y");
+            userRepository.save(user);
+        }catch (Exception e) {
+            throw new BaseException(FAIL_TO_WITHDRAW_MEMBER);
+        }
+    }
+    @Transactional
+    public void setKeyword(String id, patchKeywordReq patchKeywordReq) throws BaseException {
+        try{
+            User user = userRepository.findOne(id);
+            if(patchKeywordReq.getKeyword1()==null && patchKeywordReq.getKeyword2()==null & patchKeywordReq.getKeyword3()==null){
+                throw new BaseException(EMPTY_KEYWORD);
+            }
+            user.setKeyword1(patchKeywordReq.getKeyword1());
+            user.setKeyword2(patchKeywordReq.getKeyword2());
+            user.setKeyword3(patchKeywordReq.getKeyword3());
+            userRepository.save(user);
+        }catch (Exception e) {
+            throw new BaseException(FAIL_TO_SET_KEYWORD);
         }
     }
 

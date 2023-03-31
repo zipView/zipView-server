@@ -1,6 +1,5 @@
 package zipview_server.zipview.user;
 
-import io.jsonwebtoken.Jwt;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,7 +10,6 @@ import static zipview_server.config.BaseResponseStatus.*;
 
 import zipview_server.utils.Decrypt;
 import zipview_server.utils.EmailRegex;
-import zipview_server.utils.Encrypt;
 import zipview_server.utils.PwdRegex;
 import zipview_server.zipview.user.dto.*;
 
@@ -165,9 +163,62 @@ public class UserController {
 
     }
 
+    /**
+     * 내 정보 수정하기(닉네임만 수정)
+     */
+    @PatchMapping("/changeinfo")
+    public BaseResponse<String> changeInfo(@RequestParam("id") String id, @RequestBody PatchInfo patchInfo) throws BaseException {
+        try{
+            String userId = jwtService.getUserId();
+            if(jwtService.getJwt().isEmpty()){
+                return new BaseResponse<>(EMPTY_JWT);
+            }
+            String token = jwtService.getJwt();
+            if (jwtService.validateToken(token) && userId.equals(id)) {
+                userService.updateNickname(id, patchInfo);
+                return new BaseResponse<>("성공");
+            }else{
+                return new BaseResponse<>(INVALID_JWT);
+            }
+        }catch (BaseException e){
+            return new BaseResponse<>(e.getStatus());
+        }
+    }
 
-
-
+    /**
+     * 회원 탈퇴하기
+     */
+    @PatchMapping("/member/withdrawal/{id}")
+    public BaseResponse<String> withdrawMember(@PathVariable("id") String id) throws BaseException {
+        String userId = jwtService.getUserId();
+        if(jwtService.getJwt().isEmpty()){
+            return new BaseResponse<>(EMPTY_JWT);
+        }
+        String token = jwtService.getJwt();
+        if (jwtService.validateToken(token) && userId.equals(id)) {
+            userService.withdrawMember(id);
+            return new BaseResponse<>("성공");
+        }else{
+            return new BaseResponse<>(INVALID_JWT);
+        }
+    }
+    /**
+     * 키워드 설정하기
+     */
+    @PatchMapping("/keyword/{id}")
+    public BaseResponse<String> setKeyword(@PathVariable("id") String id, @RequestBody patchKeywordReq patchKeywordReq) throws BaseException {
+        String userId = jwtService.getUserId();
+        if(jwtService.getJwt().isEmpty()){
+            return new BaseResponse<>(EMPTY_JWT);
+        }
+        String token = jwtService.getJwt();
+        if (jwtService.validateToken(token) && userId.equals(id)) {
+            userService.setKeyword(id,patchKeywordReq);
+            return new BaseResponse<>("키워드 설정 성공");
+        }else{
+            return new BaseResponse<>(INVALID_JWT);
+        }
+    }
 
 
 

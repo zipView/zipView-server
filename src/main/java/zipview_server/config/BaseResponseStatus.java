@@ -21,6 +21,10 @@ public enum BaseResponseStatus {
     INVALID_PHONE_NUMBER(false,2010,"형식에 맞지 않는 번호입니다."),
     FAIL_TO_LOGIN(false,2011,"로그인에 실패하였습니다."),
     FAIL_TO_CHANGE_PWD(false, 2012, "비밀번호 변경에 실패하였습니다."),
+    FAIL_TO_CHANGE_INFO(false,2013,"정보 변경에 실패하였습니다."),
+    FAIL_TO_WITHDRAW_MEMBER(false,2014,"회원 탈퇴에 실패하셨습니다."),
+    FAIL_TO_SET_KEYWORD(false, 2015, "키워드 설정에 실패하였습니다."),
+    EMPTY_KEYWORD(false,2016,"키워드 수가 부족합니다."),
 
 
 
