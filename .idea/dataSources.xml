@@ -15,5 +15,23 @@
       <jdbc-url>jdbc:mysql://jdbc:mysql://zipviewdb.csuroq3b4yqz.ap-northeast-2.rds.amazonaws.com:3306</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="zipview.test/Hibernate" uuid="23f04e27-c061-457e-8574-292f17d0786e">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>Hibernate</remarks>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://zipviewdb.csuroq3b4yqz.ap-northeast-2.rds.amazonaws.com:3306/zipview_db</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="zipview.main/Hibernate" uuid="863d8f20-4319-4068-932f-30533455038a">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>Hibernate</remarks>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://zipviewdb.csuroq3b4yqz.ap-northeast-2.rds.amazonaws.com:3306/zipview_db</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

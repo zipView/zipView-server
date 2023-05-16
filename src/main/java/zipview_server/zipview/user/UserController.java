@@ -10,6 +10,7 @@ import static zipview_server.config.BaseResponseStatus.*;
 
 import zipview_server.utils.Decrypt;
 import zipview_server.utils.EmailRegex;
+import zipview_server.zipview.user.dto.JwtService;
 import zipview_server.utils.PwdRegex;
 import zipview_server.zipview.user.dto.*;
 
@@ -27,8 +28,6 @@ public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
     private final JwtService jwtService;
-
-
 
 
     @Value("${naver-login.secretkey}")

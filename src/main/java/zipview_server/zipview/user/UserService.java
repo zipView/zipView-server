@@ -16,14 +16,14 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import zipview_server.config.BaseException;
-import zipview_server.config.BaseResponse;
 import zipview_server.utils.Decrypt;
 import zipview_server.utils.Encrypt;
-import zipview_server.utils.PwdRegex;
+import zipview_server.zipview.user.dto.JwtService;
 import zipview_server.zipview.user.dto.*;
 
 
 import java.util.List;
+import java.util.Objects;
 
 import static zipview_server.config.BaseResponseStatus.*;
 
@@ -51,7 +51,7 @@ public class UserService {
         validateExistNickname(user);
         String pwd;
         try {
-            pwd = Encrypt.encryptAES256(user.getPassword());
+            pwd = Encrypt.encryptAES256(Objects.requireNonNull(user.getPassword()));
             user.setPassword(pwd);
         } catch (Exception ignored) {
             throw new BaseException(FAIL_ENCRYPT_PWD);

@@ -1,4 +1,4 @@
-package zipview_server.zipview.user;
+package zipview_server.zipview.user.dto;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;

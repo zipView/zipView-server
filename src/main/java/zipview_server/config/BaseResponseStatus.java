@@ -25,6 +25,7 @@ public enum BaseResponseStatus {
     FAIL_TO_WITHDRAW_MEMBER(false,2014,"회원 탈퇴에 실패하셨습니다."),
     FAIL_TO_SET_KEYWORD(false, 2015, "키워드 설정에 실패하였습니다."),
     EMPTY_KEYWORD(false,2016,"키워드 수가 부족합니다."),
+    FAIL_TO_SEND_FB(false,2017,"피드백 보내기에 실패하였습니다."),
 
 
 
