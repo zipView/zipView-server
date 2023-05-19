@@ -1,4 +1,4 @@
-package zipview_server.zipview.user.dto;
+package zipview_server.domain;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
