@@ -12,7 +12,14 @@
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://jdbc:mysql://zipviewdb.csuroq3b4yqz.ap-northeast-2.rds.amazonaws.com:3306</jdbc-url>
+      <jdbc-url>jjdbc:mysql://zipviewdb.cvane1qod8js.ap-northeast-2.rds.amazonaws.com</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="@zipviewdb.cvane1qod8js.ap-northeast-2.rds.amazonaws.com" uuid="7e02d049-6a63-4dc7-bd74-e484bd983742">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://zipviewdb.cvane1qod8js.ap-northeast-2.rds.amazonaws.com:3306</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
