@@ -1,14 +1,11 @@
 package zipview_server.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import zipview_server.dto.ReviewDto;
+import zipview_server.dto.review.ReviewDto;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,19 +45,16 @@ public class Review extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Residence residence;
 
-    public Review(int price, String content, int likeNum, ) {
-        this.price = price;
-        this.content = content;
-    }
 
-    public static Review createReview(ReviewDto reviewDto) {
+    public static Review createReview(int price, String content, String title, List<ReviewImage> reviewImage, int likeNum, RoomType roomType, Residence residence) {
         Review review = new Review();
-        review.price = reviewDto.getPrice();
-        review.content = reviewDto.getContent();
-        review.title = reviewDto.getTitle();
-        review.reviewImage = review.getReviewImage();
-        review.likeNum = review.getLikeNum();
-        review.roomType = review.getRoomType();
-        review.residence = review.getResidence();
+        review.price = price;
+        review.content = content;
+        review.title = title;
+        review.reviewImage = reviewImage;
+        review.likeNum = likeNum;
+        review.roomType = roomType;
+        review.residence = residence;
+        return review;
     }
 }

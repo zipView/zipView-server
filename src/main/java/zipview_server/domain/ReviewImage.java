@@ -20,4 +20,20 @@ public class ReviewImage extends BaseEntity {
     private int num;
     private boolean isHarm;
 
+    //연관관계 메서드
+    public void setReviewImage(Review review) {
+        this.review = review;
+        review.getReviewImage().add(this);
+    }
+
+    public static ReviewImage createReviewImage(Review review, String path, int num, boolean isHarm) {
+        ReviewImage reviewImage = new ReviewImage();
+        reviewImage.path = path;
+        reviewImage.num = num;
+        reviewImage.isHarm = isHarm;
+        this.setReviewImage(review);
+        return reviewImage;
+
+    }
+
 }
