@@ -1,4 +1,4 @@
-package zipview_server.dto;
+package zipview_server.dto.review;
 
 import zipview_server.domain.ReviewImage;
 
@@ -8,9 +8,9 @@ public class ReviewImageDto {
     private boolean isHarm;
 
     public ReviewImageDto(ReviewImage reviewImage) {
-        path = reviewImage.getPath();
-        num = reviewImage.getNum();
-        isHarm = reviewImage.isHarm();
+        this.path = reviewImage.getPath();
+        this.num = reviewImage.getNum();
+        this.isHarm = reviewImage.isHarm();
 
     }
 }

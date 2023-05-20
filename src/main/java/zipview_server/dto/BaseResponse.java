@@ -1,3 +1,5 @@
+package zipview_server.dto;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -33,3 +35,5 @@ public class BaseResponse {
         return ResponseEntity
                 .status(status)
                 .body(BaseResponse.of(false, msg));
+    }
+}
