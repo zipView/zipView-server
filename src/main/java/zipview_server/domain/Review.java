@@ -1,5 +1,6 @@
 package zipview_server.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import zipview_server.dto.review.ReviewDto;
@@ -13,7 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 //@Builder
 @Entity
-@Table(name = "reviews")
+@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "review")
 public class Review extends BaseEntity {
 
     @Id @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -26,16 +28,15 @@ public class Review extends BaseEntity {
     private int price;
 
     @NotNull
-    private String content;
-
-    @NotNull
     private String title;
 
-//    @JsonFormat(pattern = "yyyy/MM/dd HH:mm", timezone = "Asia/Seoul")
-//    private LocalDateTime createTime;
+    @NotNull
+    private String content;
+
+    private boolean isHarm;
 
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL)
-    private List<ReviewImage> reviewImage = new ArrayList<>();
+    private List<ReviewImage> reviewImages = new ArrayList<>();
 
     private int likeNum;
 
@@ -46,15 +47,31 @@ public class Review extends BaseEntity {
     private Residence residence;
 
 
-    public static Review createReview(int price, String content, String title, List<ReviewImage> reviewImage, int likeNum, RoomType roomType, Residence residence) {
+
+    public void addReviewImage(ReviewImage reviewImage) {
+        reviewImages.add(reviewImage);
+        if(reviewImage.getReview() != this)
+            reviewImage.setReview(this);
+    }
+
+    public void setReviewImage(ReviewImage reviewImage) {
+        reviewImages.add(reviewImage);
+        reviewImage.setReview(this);
+    }
+
+
+    public static Review createReivew(int price, String content, String title, int likeNum, RoomType roomType, Residence residence) {
         Review review = new Review();
+  //      review.id = id;
         review.price = price;
-        review.content = content;
         review.title = title;
-        review.reviewImage = reviewImage;
+        review.content = content;
         review.likeNum = likeNum;
         review.roomType = roomType;
         review.residence = residence;
         return review;
     }
 }
+
+
+

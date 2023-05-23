@@ -3,20 +3,22 @@ package zipview_server.controller;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+//import zipview_server.api.S3Util;
 import zipview_server.constants.SuccessCode;
 import zipview_server.domain.Review;
-import zipview_server.dto.review.RequestReviewDto;
-import zipview_server.dto.review.ReviewResponse;
+import zipview_server.dto.review.*;
 import zipview_server.repository.ReviewRepository;
 import zipview_server.service.ReviewService;
+
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
 
-import static zipview_server.constants.SuccessCode.CREATE_REVIEW_SUCCESS;
+import static zipview_server.constants.SuccessCode.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,32 +26,56 @@ public class ReviewController {
 
     private final ReviewRepository reviewRepository;
     private final ReviewService reviewService;
+  //  private final S3Util s3Util;
 
     @GetMapping("/reviews")
-    public List<Review> findReview() {
-        return reviewService.findReviews();
-
+    public ResponseEntity<ReviewListResponse> getReviews() {
+        ReviewListResponseDto response = reviewService.getReviews();
+        return ReviewListResponse.newResponse(LOAD_REVIEW_SUCCESS, response);
     }
 
     @PostMapping("/review")
-    public ResponseEntity<ReviewResponse> saveReview(@RequestBody RequestReviewDto requestReviewDto) {
+    public ResponseEntity<ReviewResponse> saveReview(@RequestPart(value = "image", required = false) List<MultipartFile> files,
+                                                     @RequestPart(value = "requestReviewDto") RequestReviewDto requestReviewDto) throws Exception {
+/* @RequestPart(value="image", required=false) List<MultipartFile> files,
+    @RequestPart(value = "requestDto") BoardCreateRequestDto requestDto*/
+
+        reviewService.save(requestReviewDto, files);
+
+
+/*        List<String> imageURLs = new ArrayList<>();
+        if(request.getImage().size() > 0){
+            imageURLs = request.getImage().stream()
+                    .map(image -> {
+                        try{
+                            return s3Util.postUpload(image);
+                        }catch(IOException e){
+                            throw new RuntimeException(e.toString());
+                        }
+                    })
+                    .collect(Collectors.toList());
+        }
+
+        RequestReviewDto requestReviewDto = request.toRequestReviewDto(imageURLs);
+
         reviewService.save(requestReviewDto);
+*/
+
         return ReviewResponse.newResponse(CREATE_REVIEW_SUCCESS);
     }
 
-    @Data
-    static class CreateReviewResponse {
-        private Long id;
+    @DeleteMapping("/review/{review-id}")
+    public ResponseEntity<ReviewResponse> deleteReview(@PathVariable("review-id") Long reviewId) throws Exception {
 
-        public CreateReviewResponse(Long id) {
-            this.id = id;
-        }
+        RequestReviewDto requestReviewDto = RequestReviewDto.of(reviewId);
+        reviewService.delete(requestReviewDto);
+
+        return ReviewResponse.newResponse(REVIEW_DELETE_SUCCESS);
+
     }
 
-    @Data
-    static class CreateReviewRequest {
-        private int price;
-        private String content;
-    }
+
+
+
 }
 

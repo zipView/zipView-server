@@ -2,33 +2,39 @@ package zipview_server.dto.review;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+//import zipview_server.domain.CommunityReview;
+import lombok.Getter;
 import zipview_server.domain.Residence;
 import zipview_server.domain.Review;
 import zipview_server.domain.RoomType;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Getter
 @Data
 @AllArgsConstructor
 public class ReviewDto {
 
+    private Long id;
     private int price;
-    private String content;
     private String title;
+    private String content;
     private int likeNum;
-    private List<ReviewImageDto> reviewImage;
+    private List<ReviewImageDto> reviewImages;
     private RoomType roomType;
     private Residence residence;
 
     public ReviewDto(Review review) {
+        this.id = review.getId();
         this.price = review.getPrice();
         this.content = review.getContent();
         this.title = review.getTitle();
         this.likeNum = review.getLikeNum();
-//        this.reviewImage = review.getReviewImage().stream()
-//               .map(reviewImage -> new ReviewImageDto(reviewImage))
-//               .collect(Collectors.toList());
+        this.reviewImages = review.getReviewImages().stream()
+               .map(reviewImage -> new ReviewImageDto(reviewImage))
+               .collect(Collectors.toList());
         this.roomType = review.getRoomType();
         this.residence = review.getResidence();
     }
+
 }

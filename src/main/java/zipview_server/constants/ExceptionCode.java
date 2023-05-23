@@ -24,8 +24,10 @@ public enum ExceptionCode {
     /* 403 - 허용되지 않은 접근 */
     FORBIDDEN_ACCESS(FORBIDDEN, "허용되지 않은 접근입니다."),
 
+
     /* 404 - 찾을 수 없는 리소스 */
-    MEMBER_EMAIL_NOT_FOUND(NOT_FOUND, "가입되지 않은 이메일입니다.");
+    MEMBER_EMAIL_NOT_FOUND(NOT_FOUND, "가입되지 않은 이메일입니다."),
+    REVIEW_NOT_FOUND(NOT_FOUND, "존재하지 않는 게시글입니다");
 
     private final HttpStatus status;
     private final String msg;

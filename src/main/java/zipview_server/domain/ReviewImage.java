@@ -1,37 +1,57 @@
 package zipview_server.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "review_image")
 @Getter
+@NoArgsConstructor
 public class ReviewImage extends BaseEntity {
     @Id @GeneratedValue
     @Column(name = "review_image_id")
     private Long id;
 
+  //  @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "review_id")
     private Review review;
 
+    private String name;
+    private Long fileSize;
     private String path;
-    private int num;
     private boolean isHarm;
 
     //연관관계 메서드
-    public void setReviewImage(Review review) {
+    public void setReview(Review review) {
+        if(this.review != null) {
+            this.review.getReviewImages().remove(this);
+        }
         this.review = review;
-        review.getReviewImage().add(this);
+        if(!review.getReviewImages().contains(this))
+            review.getReviewImages().add(this);
     }
 
-    public static ReviewImage createReviewImage(Review review, String path, int num, boolean isHarm) {
+    @Builder
+    public ReviewImage(String name, Long fileSize, String path, boolean isHarm) {
+        this.name = name;
+        this.fileSize = fileSize;
+        this.path = path;
+        this.isHarm = isHarm;
+    }
+
+
+
+    public static ReviewImage createReviewImage(Review review, boolean isHarm, String path) {
         ReviewImage reviewImage = new ReviewImage();
         reviewImage.path = path;
-        reviewImage.num = num;
+   //    reviewImage.num = num;
         reviewImage.isHarm = isHarm;
-        this.setReviewImage(review);
+       reviewImage.setReview(review);
         return reviewImage;
 
     }
