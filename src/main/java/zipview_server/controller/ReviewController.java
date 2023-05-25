@@ -39,10 +39,7 @@ public class ReviewController {
                                                      @RequestPart(value = "requestReviewDto") RequestReviewDto requestReviewDto) throws Exception {
 /* @RequestPart(value="image", required=false) List<MultipartFile> files,
     @RequestPart(value = "requestDto") BoardCreateRequestDto requestDto*/
-
         reviewService.save(requestReviewDto, files);
-
-
 /*        List<String> imageURLs = new ArrayList<>();
         if(request.getImage().size() > 0){
             imageURLs = request.getImage().stream()
@@ -57,10 +54,8 @@ public class ReviewController {
         }
 
         RequestReviewDto requestReviewDto = request.toRequestReviewDto(imageURLs);
-
         reviewService.save(requestReviewDto);
 */
-
         return ReviewResponse.newResponse(CREATE_REVIEW_SUCCESS);
     }
 
@@ -74,6 +69,17 @@ public class ReviewController {
 
     }
 
+    @PutMapping("/review/change/{review-id}")
+    public ResponseEntity<ReviewResponse> fixReview(@PathVariable("review-id") Long reviewId,
+                                                    @RequestPart(value = "image", required = false) List<MultipartFile> files,
+                                                    @RequestPart(value = "requestReviewDto") RequestReviewDto requestReviewDto) throws Exception {
+     //   requestReviewDto = RequestReviewDto.of(reviewId);
+       // System.out.println("가격");
+     //   System.out.println(requestReviewDto.getPrice());
+        reviewService.fixReviews(requestReviewDto, files, reviewId);
+
+        return ReviewResponse.newResponse(REVIEW_FIX_SUCCESS);
+    }
 
 
 

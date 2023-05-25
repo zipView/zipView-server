@@ -28,12 +28,16 @@ public class ReviewImage extends BaseEntity {
 
     //연관관계 메서드
     public void setReview(Review review) {
+
         if(this.review != null) {
+            System.out.println("리뷰가 있으면 다 삭제해");
             this.review.getReviewImages().remove(this);
         }
         this.review = review;
-        if(!review.getReviewImages().contains(this))
+        if(!review.getReviewImages().contains(this)) {
+            System.out.println("리뷰 같은 이미지 들어가있지 않으면 ");
             review.getReviewImages().add(this);
+        }
     }
 
     @Builder

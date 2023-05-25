@@ -22,10 +22,13 @@ public class Review extends BaseEntity {
     @Column(name ="review_id")
     private Long id;
 
-  //  User 연결!!
+   /* @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    @NotNull
+    private User user;*/
 
     @NotNull
-    private int price;
+    private Integer price;
 
     @NotNull
     private String title;
@@ -33,12 +36,10 @@ public class Review extends BaseEntity {
     @NotNull
     private String content;
 
-    private boolean isHarm;
-
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL)
     private List<ReviewImage> reviewImages = new ArrayList<>();
 
-    private int likeNum;
+    private Integer likeNum;
 
     @Enumerated(EnumType.STRING)
     private RoomType roomType;
@@ -59,10 +60,10 @@ public class Review extends BaseEntity {
         reviewImage.setReview(this);
     }
 
-
     public static Review createReivew(int price, String content, String title, int likeNum, RoomType roomType, Residence residence) {
         Review review = new Review();
   //      review.id = id;
+    //    review.user = user;
         review.price = price;
         review.title = title;
         review.content = content;
@@ -71,6 +72,18 @@ public class Review extends BaseEntity {
         review.residence = residence;
         return review;
     }
+
+    public void fixReview(int price, String content, String title, RoomType roomType, Residence residence) {
+
+        this.price = price;
+        this.title = title;
+        this.content = content;
+        this.roomType = roomType;
+        this.residence = residence;
+
+    }
+
+
 }
 
 
