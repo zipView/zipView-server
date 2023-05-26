@@ -75,17 +75,10 @@ public class ReviewService {
       //  Review review = reviewRepository.findById(requestReviewDto.getId())
        ///         .orElseThrow(()-> new CustomException(ExceptionCode.REVIEW_NOT_FOUND));
 
-
-
-
-        System.out.println("1");
         Optional<Review> review = Optional.ofNullable(reviewRepository.getReview(reviewId));
         if (review.isEmpty()) {
             throw new CustomException(REVIEW_NOT_FOUND);
         }
-
-
-
         System.out.println(review.get().getContent());
         List<ReviewImage> reviewImageList = fileHandler.parseFileInfo(files);
         if(!reviewImageList.isEmpty()) {

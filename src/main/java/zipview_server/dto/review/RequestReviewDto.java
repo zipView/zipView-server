@@ -24,6 +24,9 @@ public class RequestReviewDto {
     private RoomType roomType;
     private Residence residence;
 
+
+
+
     private RequestReviewDto(Long id) {
         this.id = id;
 

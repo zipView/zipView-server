@@ -11,6 +11,7 @@ public class WriteCommentRequest {
 //    private Long reviewId;
     //유저아이디
 
+    private Long id;
     @NotNull(message = "댓글 내용을 입력해주세요.")
     private String content;
 

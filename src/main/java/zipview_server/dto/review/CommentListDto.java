@@ -9,13 +9,13 @@ import zipview_server.domain.Comment;
 @Data
 @AllArgsConstructor
 public class CommentListDto {
-    private Long reviewId;
+    private Long id;
     private String content;
 
 
 
-    public static CommentListDto of(Long reviewId, String content) {
-        return new CommentListDto(reviewId, content);
+    public static CommentListDto of(Long id, String content) {
+        return new CommentListDto(id, content);
     }
 
 

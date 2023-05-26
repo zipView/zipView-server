@@ -33,24 +33,28 @@ public class Comment extends BaseEntity {
     @NotNull
     private String content;
 
-    private Comment(Review review, String content) {
+    private Comment(Review review, Long id,  String content) {
+        this.id = id;
         this.review = review;
         this.content = content;
     }
 
-    public static Comment createComment(Review review, String content) {
+    public static Comment createComment(Review review, Long id, String content) {
         Comment comment = new Comment();
+        comment.id = id;
         comment.review = review;
         comment.content = content;
         return comment;
     }
 
 
-    public static Comment of(Review review, String content) {
-        return new Comment(review, content);
+    public static Comment of(Review review, Long id, String content) {
+        return new Comment(review, id, content);
     }
 
-
+    public void fixComment(String content) {
+        this.content = content;
+    }
 
 
 

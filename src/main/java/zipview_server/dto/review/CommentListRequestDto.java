@@ -7,15 +7,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CommentListRequestDto {
     //offset
-    private Long reviewId;
+   // private Long reviewId;
+    private Long id;
     private String content;
 
-    private CommentListRequestDto(Long reviewId, String content) {
-        this.reviewId = reviewId;
+    private CommentListRequestDto(Long id,  String content) {
+    //    this.reviewId = reviewId;
+       this.id = id;
         this.content = content;
     }
 
-    public static CommentListRequestDto of(Long reviewId, String content) {
-        return new CommentListRequestDto(reviewId, content);
+    public static CommentListRequestDto of(Long id, String content) {
+        return new CommentListRequestDto(id, content);
     }
 }

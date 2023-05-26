@@ -15,10 +15,11 @@ import zipview_server.domain.Review;
 public class WriteCommentRequestDto {
 
    // private Long reviewId;
+    private Long id;
     private String content;
 
-    public Comment toComment(Review review, String content) {
-        return Comment.of(review, content);
+    public Comment toComment(Review review, Long id, String content) {
+        return Comment.of(review,id, content);
     }
 
 

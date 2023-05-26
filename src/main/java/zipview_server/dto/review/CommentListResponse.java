@@ -24,4 +24,10 @@ public class CommentListResponse extends BaseResponse {
         CommentListResponse response = CommentListResponse.of(true, code.getMsg(), data);
         return new ResponseEntity(response, code.getStatus());
     }
+
+    public static ResponseEntity<CommentListResponse> newResponse(SuccessCode code) {
+        return new  ResponseEntity(CommentListResponse.of(true, code.getMsg()), code.getStatus());
+    }
+
+
 }

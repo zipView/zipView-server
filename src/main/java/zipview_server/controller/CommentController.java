@@ -28,10 +28,24 @@ public class CommentController {
     }
 
     @GetMapping("/comments/{review-id}")
-    public ResponseEntity<CommentListResponse> getCommet(@PathVariable("review-id") Long reviewId) throws Exception {
+    public ResponseEntity<CommentListResponse> getComment(@PathVariable("review-id") Long reviewId) throws Exception {
 
 
         CommentListResponseDto responseDto = commentService.getComments(reviewId);
         return CommentListResponse.newResponse(LOAD_COMMENT_SUCCESS, responseDto);
+    }
+
+    @DeleteMapping("/comment/{review-id}") //user 연결 후 review id로 변경
+    public ResponseEntity<CommentListResponse> deleteComment(@PathVariable("review-id") Long reviewId) throws Exception {
+    //    CommentListRequestDto commentListRequestDto = CommentListRequestDto.of();
+        commentService.deleteComment(reviewId);
+        return CommentListResponse.newResponse(COMMENT_DELETE_SUCCESS);
+    }
+
+    @PutMapping("/comment/{review-id}")  //user 연결 후 review id로 변경
+    public ResponseEntity<WriteCommentResponse> fixComment(@PathVariable("review-id") Long reviewId,
+                                                           @Valid @RequestBody WriteCommentRequest request) throws  Exception {
+        commentService.fixComment(request, reviewId);
+        return WriteCommentResponse.newResponse(COMMENT_FIX_SUCCESS);
     }
 }
