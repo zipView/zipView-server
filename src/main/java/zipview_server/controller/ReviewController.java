@@ -2,6 +2,9 @@ package zipview_server.controller;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -88,6 +91,20 @@ public class ReviewController {
 
         return ReviewResponse.newResponse(REVIEW_REPORT_SUCCESS);
 
+    }
+
+    @PostMapping("/review/like/{review-id}")
+    public ResponseEntity<ReviewResponse> likeReview(@PathVariable("review-id") Long reviewId) throws Exception {
+
+        reviewService.likeReview(reviewId);
+        return ReviewResponse.newResponse(REVIEW_LIKE_SUCCESS);
+    }
+
+    @GetMapping("/review/best")
+    public ResponseEntity<ReviewListResponse> bestReview(@PageableDefault(size = 5, sort = "likeNum", direction = Sort.Direction.DESC) Pageable pageable) {
+        ReviewListResponseDto response = reviewService.getBestReviews(pageable);
+
+        return  ReviewListResponse.newResponse(REVIEW_BEST_SUCCESS, response);
     }
 
 
