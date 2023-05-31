@@ -81,6 +81,17 @@ public class ReviewController {
         return ReviewResponse.newResponse(REVIEW_FIX_SUCCESS);
     }
 
+    @PostMapping("/review/report/{review-id}")
+    public ResponseEntity<ReviewResponse> reportReview(@PathVariable("review-id") Long reviewId) throws Exception {
+
+        reviewService.reportReview(reviewId);
+
+        return ReviewResponse.newResponse(REVIEW_REPORT_SUCCESS);
+
+    }
+
+
+
 
 
 }
