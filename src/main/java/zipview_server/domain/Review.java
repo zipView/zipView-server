@@ -40,8 +40,12 @@ public class Review extends BaseEntity {
     private List<ReviewImage> reviewImages = new ArrayList<>();
 
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL)
-    private List<ReviewReport> reviewList = new ArrayList<>();
+    private List<ReviewReport> reviewReportList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL)
+    private List<LikeReview> reviewLikeList = new ArrayList<>();
+
+    @NotNull
     private Integer likeNum;
 
     @Enumerated(EnumType.STRING)
@@ -66,6 +70,10 @@ public class Review extends BaseEntity {
     public void setReviewImage(ReviewImage reviewImage) {
         reviewImages.add(reviewImage);
         reviewImage.setReview(this);
+    }
+
+    public void setLikeNum(int like) {
+        this.likeNum = like;
     }
 
     public void increaseReport() {
