@@ -1,26 +1,27 @@
 package zipview_server.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import zipview_server.api.FileHandler;
 //import zipview_server.domain.CommunityReview;
 import zipview_server.constants.ExceptionCode;
-import zipview_server.domain.Residence;
-import zipview_server.domain.Review;
-import zipview_server.domain.ReviewImage;
-import zipview_server.domain.ReviewReport;
+import zipview_server.domain.*;
 import zipview_server.dto.review.RequestReviewDto;
 import zipview_server.dto.review.ReviewDto;
 //import zipview_server.repository.CommunityReviewRepository;
 import zipview_server.dto.review.ReviewListResponseDto;
 import zipview_server.dto.review.ReviewResponse;
 import zipview_server.exception.CustomException;
+import zipview_server.repository.LikeReviewRepository;
 import zipview_server.repository.ReviewImageRepository;
 import zipview_server.repository.ReviewReportRepository;
 import zipview_server.repository.ReviewRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -39,6 +40,7 @@ public class ReviewService {
   // private final CommunityReviewRepository communityReviewRepository;
     private final ReviewReportRepository reviewReportRepository;
     private final FileHandler fileHandler;
+    private final LikeReviewRepository likeReviewRepository;
 
     @Transactional
     public void save(RequestReviewDto requestReviewDto, List<MultipartFile> files) throws Exception {
@@ -125,7 +127,49 @@ public class ReviewService {
         }*/
 
     }
+
+    @Transactional
+    public String likeReview(Long reviewId) {
+        Review review = reviewRepository.findById(reviewId)
+                        .orElseThrow(() -> new CustomException(REVIEW_NOT_FOUND));
+
+        //유저 연결
+
+        if(likeReviewRepository.findByReview(review) == null) {
+
+            review.setLikeNum(review.getLikeNum()+1);
+            LikeReview likeReview = LikeReview.createLikeReview(review);
+            likeReviewRepository.save(likeReview);
+            return "좋아요 완료";
+        } else {
+            LikeReview likeReview = likeReviewRepository.findByReview(review);
+            likeReview.unLikeReview(review);
+            likeReviewRepository.delete(likeReview);
+            return "좋아요 취소 완료";
+        }
+
+    }
+
+    public ReviewListResponseDto getBestReviews(Pageable pageable) {
+        Page<Review> reviews = reviewRepository.findByLikeNumGreaterThanEqual(pageable, 10);
+        List<ReviewDto> reviewList = new ArrayList<>();
+      //  reviews.stream().map(review -> new ReviewDto(review))
+       //         .collect(Collectors.toList());
+        reviews.stream().forEach(i -> reviewList.add(new ReviewDto(i)));
+
+       // System.out.println(reviewList.get(0).getLikeNum());
+        return ReviewListResponseDto.of(reviewList);
+    }
+//    public ReviewListResponseDto getReviews() {
+//        List<ReviewDto> reviews = reviewRepository.findAll().stream()
+//                .map(review -> new ReviewDto(review))
+//                .collect(Collectors.toList());
+//        return ReviewListResponseDto.of(reviews);
+//    }
 }
+
+
+
 /*
     private User getUser() {
         String userEmail = SecurityUtil.getCurrentEmail()
