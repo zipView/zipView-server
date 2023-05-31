@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Getter
@@ -30,26 +32,39 @@ public class Comment extends BaseEntity {
     @JoinColumn(name = "review_id")
     private Review review;
 
+    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
+    private List<CommentReport> commentList = new ArrayList<>();
+
     @NotNull
     private String content;
 
-    private Comment(Review review, Long id,  String content) {
+    @NotNull
+    private Integer report;
+
+
+    private Comment(Review review, Long id,  String content, int report) {
         this.id = id;
         this.review = review;
         this.content = content;
+        this.report = report;
     }
 
-    public static Comment createComment(Review review, Long id, String content) {
+    public static Comment createComment(Review review, Long id, String content, int report) {
         Comment comment = new Comment();
         comment.id = id;
         comment.review = review;
         comment.content = content;
+        comment.report = report;
         return comment;
     }
 
+    public void increaseReport() {
+        this.report +=1 ;
+    }
 
-    public static Comment of(Review review, Long id, String content) {
-        return new Comment(review, id, content);
+
+    public static Comment of(Review review, Long id, String content, int report) {
+        return new Comment(review, id, content, report);
     }
 
     public void fixComment(String content) {
