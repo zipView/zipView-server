@@ -7,14 +7,19 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import zipview_server.constants.ExceptionCode;
 import zipview_server.domain.Comment;
+import zipview_server.domain.CommentReport;
 import zipview_server.domain.Review;
+import zipview_server.domain.ReviewReport;
 import zipview_server.dto.review.*;
 import zipview_server.exception.CustomException;
+import zipview_server.repository.CommentReportRepository;
 import zipview_server.repository.CommentRepository;
 import zipview_server.repository.ReviewRepository;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static zipview_server.constants.ExceptionCode.*;
 
 @Service
 @Transactional(readOnly = true)
@@ -22,6 +27,7 @@ import java.util.stream.Collectors;
 public class CommentService {
     private final ReviewRepository reviewRepository;
     private final CommentRepository commentRepository;
+    private final CommentReportRepository commentReportRepository;
 
     @Transactional
     public void save(WriteCommentRequestDto requestDto, Long reviewId) {
@@ -31,7 +37,7 @@ public class CommentService {
         Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new CustomException(ExceptionCode.REVIEW_NOT_FOUND));
 
-       Comment comment = Comment.createComment(review, requestDto.getId(), requestDto.getContent());
+       Comment comment = Comment.createComment(review, requestDto.getId(), requestDto.getContent(), requestDto.getReport());
         commentRepository.save(comment);
     }
 
@@ -40,7 +46,7 @@ public class CommentService {
                 .orElseThrow(() -> new CustomException(ExceptionCode.REVIEW_NOT_FOUND));
 
         List<CommentListDto> comments = commentRepository.findAllByReview(review).stream()
-                .map(comment -> CommentListDto.of(comment.getId(), comment.getContent()))
+                .map(comment -> CommentListDto.of(comment.getId(), comment.getContent(), comment.getReport()))
                 .collect(Collectors.toList());
 
         return CommentListResponseDto.of(comments);
@@ -68,4 +74,34 @@ public class CommentService {
 
 
     }
+
+    @Transactional
+    public void reportComment(Long commentId) {
+        //user 연결
+
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new CustomException(COMMENT_NOT_FOUND));
+
+
+        Optional<CommentReport> commentReport = commentReportRepository.getCommentReport(commentId);
+
+        if(commentReport.isEmpty()) {
+            CommentReport report = CommentReport.createCommentReport(comment);
+            commentReportRepository.save(report);
+
+            comment.increaseReport();
+            if(comment.getReport() == 10) {
+
+                commentReportRepository.deleteCommentReport(comment.getId());
+                commentRepository.delete(comment);
+
+            }
+
+        }
+        if (commentReport.isPresent()) {
+            throw new CustomException(ALREADY_REPORT_COMMENT);
+        }
+
+    }
 }
+
