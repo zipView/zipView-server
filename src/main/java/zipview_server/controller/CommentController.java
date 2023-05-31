@@ -48,4 +48,14 @@ public class CommentController {
         commentService.fixComment(request, reviewId);
         return WriteCommentResponse.newResponse(COMMENT_FIX_SUCCESS);
     }
+
+
+    @PostMapping("/comment/report/{comment-id}")
+    public ResponseEntity<CommentListResponse> reportComment(@PathVariable("comment-id") Long commentId) throws Exception {
+
+        commentService.reportComment(commentId);
+
+        return CommentListResponse.newResponse(COMMENT_REPORT_SUCCESS);
+
+    }
 }
