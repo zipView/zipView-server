@@ -10,6 +10,7 @@ import zipview_server.constants.ExceptionCode;
 import zipview_server.domain.Residence;
 import zipview_server.domain.Review;
 import zipview_server.domain.ReviewImage;
+import zipview_server.domain.ReviewReport;
 import zipview_server.dto.review.RequestReviewDto;
 import zipview_server.dto.review.ReviewDto;
 //import zipview_server.repository.CommunityReviewRepository;
@@ -17,12 +18,14 @@ import zipview_server.dto.review.ReviewListResponseDto;
 import zipview_server.dto.review.ReviewResponse;
 import zipview_server.exception.CustomException;
 import zipview_server.repository.ReviewImageRepository;
+import zipview_server.repository.ReviewReportRepository;
 import zipview_server.repository.ReviewRepository;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static zipview_server.constants.ExceptionCode.ALREADY_REPORT_REVIEW;
 import static zipview_server.constants.ExceptionCode.REVIEW_NOT_FOUND;
 
 @Service
@@ -34,12 +37,13 @@ public class ReviewService {
     private final ReviewImageRepository reviewImageRepository;
 //    private final UserRepository userRepository;
   // private final CommunityReviewRepository communityReviewRepository;
+    private final ReviewReportRepository reviewReportRepository;
     private final FileHandler fileHandler;
 
     @Transactional
     public void save(RequestReviewDto requestReviewDto, List<MultipartFile> files) throws Exception {
    //     User user = getUser();
-        Review review = Review.createReivew(requestReviewDto.getPrice(), requestReviewDto.getContent(), requestReviewDto.getTitle(), requestReviewDto.getLikeNum(), requestReviewDto.getRoomType(), requestReviewDto.getResidence());
+        Review review = Review.createReivew(requestReviewDto.getPrice(), requestReviewDto.getContent(), requestReviewDto.getTitle(), requestReviewDto.getLikeNum(), requestReviewDto.getRoomType(), requestReviewDto.getResidence(), requestReviewDto.getReport());
         List<ReviewImage> reviewImageList = fileHandler.parseFileInfo(files);
         if(!reviewImageList.isEmpty()) {
             for (ReviewImage reviewImage : reviewImageList) {
@@ -95,6 +99,32 @@ public class ReviewService {
 
     }
 
+    @Transactional
+    public void reportReview(Long reviewId) {
+        //user 연결
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new CustomException(REVIEW_NOT_FOUND));
+
+        Optional<ReviewReport> reviewReport = reviewReportRepository.getReviewReport(reviewId);
+
+        if(reviewReport.isEmpty()) {
+            ReviewReport report = ReviewReport.createReviewReport(review);
+            reviewReportRepository.save(report);
+
+            review.increaseReport();
+            if(review.getReport() == 10) {
+
+                reviewReportRepository.deleteReviewReport(review.getId());
+                reviewRepository.delete(review);
+
+            }
+
+        }
+       /* if (reviewReport.isPresent()) {
+            throw new CustomException(ALREADY_REPORT_REVIEW);
+        }*/
+
+    }
 }
 /*
     private User getUser() {
