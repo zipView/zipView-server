@@ -39,6 +39,9 @@ public class Review extends BaseEntity {
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL)
     private List<ReviewImage> reviewImages = new ArrayList<>();
 
+    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL)
+    private List<ReviewReport> reviewList = new ArrayList<>();
+
     private Integer likeNum;
 
     @Enumerated(EnumType.STRING)
@@ -46,6 +49,11 @@ public class Review extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private Residence residence;
+
+    @NotNull
+    private Integer report;
+
+
 
 
 
@@ -60,7 +68,11 @@ public class Review extends BaseEntity {
         reviewImage.setReview(this);
     }
 
-    public static Review createReivew(int price, String content, String title, int likeNum, RoomType roomType, Residence residence) {
+    public void increaseReport() {
+        this.report +=1 ;
+    }
+
+    public static Review createReivew(int price, String content, String title, int likeNum, RoomType roomType, Residence residence, int report) {
         Review review = new Review();
   //      review.id = id;
     //    review.user = user;
@@ -70,6 +82,7 @@ public class Review extends BaseEntity {
         review.likeNum = likeNum;
         review.roomType = roomType;
         review.residence = residence;
+        review.report = report;
         return review;
     }
 
