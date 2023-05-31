@@ -23,6 +23,7 @@ public class ReviewDto {
     private List<ReviewImageDto> reviewImages;
     private RoomType roomType;
     private Residence residence;
+    private int report;
 
     public ReviewDto(Review review) {
         this.id = review.getId();
@@ -35,6 +36,7 @@ public class ReviewDto {
                .collect(Collectors.toList());
         this.roomType = review.getRoomType();
         this.residence = review.getResidence();
+        this.report = review.getReport();
     }
 
 }

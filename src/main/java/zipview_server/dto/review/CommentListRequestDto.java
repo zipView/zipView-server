@@ -10,14 +10,16 @@ public class CommentListRequestDto {
    // private Long reviewId;
     private Long id;
     private String content;
+    private int report;
 
-    private CommentListRequestDto(Long id,  String content) {
+    private CommentListRequestDto(Long id,  String content, int report) {
     //    this.reviewId = reviewId;
        this.id = id;
         this.content = content;
+        this.report = report;
     }
 
-    public static CommentListRequestDto of(Long id, String content) {
-        return new CommentListRequestDto(id, content);
+    public static CommentListRequestDto of(Long id, String content, int report) {
+        return new CommentListRequestDto(id, content, report);
     }
 }

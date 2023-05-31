@@ -23,6 +23,7 @@ public class RequestReviewDto {
     private int likeNum;
     private RoomType roomType;
     private Residence residence;
+    private int report;
 
 
 

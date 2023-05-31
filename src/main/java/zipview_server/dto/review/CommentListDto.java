@@ -11,11 +11,12 @@ import zipview_server.domain.Comment;
 public class CommentListDto {
     private Long id;
     private String content;
+    private int report;
 
 
 
-    public static CommentListDto of(Long id, String content) {
-        return new CommentListDto(id, content);
+    public static CommentListDto of(Long id, String content, int report) {
+        return new CommentListDto(id, content, report);
     }
 
 

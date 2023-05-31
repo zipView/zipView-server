@@ -14,12 +14,14 @@ public class WriteCommentRequest {
     private Long id;
     @NotNull(message = "댓글 내용을 입력해주세요.")
     private String content;
+    private int report;
 
     // 유저 빌더
    public WriteCommentRequestDto toWriteCommentRequestDto() {
        return WriteCommentRequestDto.builder()
             //   .reviewId(reviewId)
                .content(content)
+               .report(report)
                .build();
    }
 

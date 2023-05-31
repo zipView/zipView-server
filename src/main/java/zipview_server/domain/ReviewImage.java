@@ -16,7 +16,7 @@ public class ReviewImage extends BaseEntity {
     @Column(name = "review_image_id")
     private Long id;
 
-  //  @JsonIgnore
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "review_id")
     private Review review;

@@ -4,9 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
-import static org.springframework.http.HttpStatus.FORBIDDEN;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-import static org.springframework.http.HttpStatus.UNAUTHORIZED;
+import static org.springframework.http.HttpStatus.*;
 
 @Getter
 @AllArgsConstructor
@@ -28,7 +26,9 @@ public enum ExceptionCode {
     /* 404 - 찾을 수 없는 리소스 */
     MEMBER_EMAIL_NOT_FOUND(NOT_FOUND, "가입되지 않은 이메일입니다."),
     REVIEW_NOT_FOUND(NOT_FOUND, "존재하지 않는 게시글입니다"),
-    COMMENT_NOT_FOUND(NOT_FOUND, "존재하지 않는 게시글입니다");
+    COMMENT_NOT_FOUND(NOT_FOUND, "존재하지 않는 게시글입니다"),
+    ALREADY_REPORT_REVIEW(CONFLICT, "이미 신고한 리뷰입니다."),
+    ALREADY_REPORT_COMMENT(CONFLICT, "이미 신고한 코멘트입니다.");
 
     private final HttpStatus status;
     private final String msg;

@@ -17,6 +17,7 @@ public class RequestReview {
     private int likenum;
     private RoomType roomType;
     private Residence residence;
+   private int report;
 /*
     public RequestReviewDto toRequestReviewDto(List<String> images) {
         return RequestReviewDto.of(price, content, title, images, likenum, roomType, residence);
