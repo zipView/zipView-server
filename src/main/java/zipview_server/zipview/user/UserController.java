@@ -56,7 +56,6 @@ public class UserController {
             user.setNickname(createUserReq.getNickname());
             user.setPhone(createUserReq.getPhone());
             user.setProvider("E");
-
             user.setPassword(createUserReq.getPassword());
             String id = userService.join(user);
             return new BaseResponse<>(new CreateUserRes(id));
