@@ -33,5 +33,12 @@
       <jdbc-url>jdbc:mysql://zipviewdb.csuroq3b4yqz.ap-northeast-2.rds.amazonaws.com:3306/zipview_db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="@zipviewdb.cvane1qod8js.ap-northeast-2.rds.amazonaws.com" uuid="2e0d7dfe-6464-40e3-9b29-7e7674407b3d">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://zipviewdb.cvane1qod8js.ap-northeast-2.rds.amazonaws.com:3306</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
