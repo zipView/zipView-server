@@ -163,10 +163,16 @@ public class ReviewService {
                 .collect(Collectors.toList());
 
         return ReviewListResponseDto.of(reviews);
-
-
-        //roomType, @Param("floor") Floor floor, @Param("roomSize") RoomSize roomSize, @Param("roomStructure") RoomStructure roomStructure
     }
+
+    public ReviewListResponseDto getSerchReviews(Pageable pageable, String keyword) {
+        Page<Review> reviews = reviewRepository.findAllReviewSerch(pageable, keyword);
+        List<ReviewDto> reviewList = new ArrayList<>();
+        reviews.stream().forEach(i -> reviewList.add(new ReviewDto(i)));
+
+        return ReviewListResponseDto.of(reviewList);
+    }
+
 
 
 //    public ReviewListResponseDto getReviews() {
