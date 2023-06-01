@@ -10,16 +10,10 @@ import zipview_server.api.FileHandler;
 //import zipview_server.domain.CommunityReview;
 import zipview_server.constants.ExceptionCode;
 import zipview_server.domain.*;
-import zipview_server.dto.review.RequestReviewDto;
-import zipview_server.dto.review.ReviewDto;
+import zipview_server.dto.review.*;
 //import zipview_server.repository.CommunityReviewRepository;
-import zipview_server.dto.review.ReviewListResponseDto;
-import zipview_server.dto.review.ReviewResponse;
 import zipview_server.exception.CustomException;
-import zipview_server.repository.LikeReviewRepository;
-import zipview_server.repository.ReviewImageRepository;
-import zipview_server.repository.ReviewReportRepository;
-import zipview_server.repository.ReviewRepository;
+import zipview_server.repository.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,11 +35,12 @@ public class ReviewService {
     private final ReviewReportRepository reviewReportRepository;
     private final FileHandler fileHandler;
     private final LikeReviewRepository likeReviewRepository;
+    private final FilterRepository filterRepository;
 
     @Transactional
     public void save(RequestReviewDto requestReviewDto, List<MultipartFile> files) throws Exception {
    //     User user = getUser();
-        Review review = Review.createReivew(requestReviewDto.getPrice(), requestReviewDto.getContent(), requestReviewDto.getTitle(), requestReviewDto.getLikeNum(), requestReviewDto.getRoomType(), requestReviewDto.getResidence(), requestReviewDto.getReport());
+        Review review = Review.createReivew(requestReviewDto.getRentMin(), requestReviewDto.getRentMax(), requestReviewDto.getDepositMin(), requestReviewDto.getDepositMax(), requestReviewDto.getMaintenanceFeeMin(), requestReviewDto.getMaintenanceFeeMax(), requestReviewDto.getContent(), requestReviewDto.getTitle(), requestReviewDto.getLikeNum(), requestReviewDto.getRoomType(), requestReviewDto.getResidence(), requestReviewDto.getReport(), requestReviewDto.getFloor(), requestReviewDto.getRoomSize(), requestReviewDto.getRoomStructure(), requestReviewDto.getTransactionType());
         List<ReviewImage> reviewImageList = fileHandler.parseFileInfo(files);
         if(!reviewImageList.isEmpty()) {
             for (ReviewImage reviewImage : reviewImageList) {
@@ -95,8 +90,7 @@ public class ReviewService {
                 reviewImage.setReview(review.get());
             }
         }
-        System.out.println(requestReviewDto.getPrice());
-        review.ifPresent(reviews -> reviews.fixReview(requestReviewDto.getPrice(), requestReviewDto.getContent(), requestReviewDto.getTitle(), requestReviewDto.getRoomType(), requestReviewDto.getResidence()));
+        review.ifPresent(reviews -> reviews.fixReview(requestReviewDto.getRentMin(), requestReviewDto.getRentMax(), requestReviewDto.getDepositMin(), requestReviewDto.getDepositMax(), requestReviewDto.getMaintenanceFeeMin(), requestReviewDto.getMaintenanceFeeMax(), requestReviewDto.getContent(), requestReviewDto.getTitle(), requestReviewDto.getRoomType(), requestReviewDto.getResidence(), requestReviewDto.getFloor(), requestReviewDto.getRoomSize(), requestReviewDto.getRoomStructure(), requestReviewDto.getTransactionType()));
 
 
     }
@@ -160,6 +154,21 @@ public class ReviewService {
        // System.out.println(reviewList.get(0).getLikeNum());
         return ReviewListResponseDto.of(reviewList);
     }
+
+    public ReviewListResponseDto getFilterReview(RequestReviewFilterDto requestReviewFilterDto) {
+
+        List<ReviewDto> reviews = filterRepository.getReview(requestReviewFilterDto.getRentMin(), requestReviewFilterDto.getRentMax(), requestReviewFilterDto.getDepositMin(), requestReviewFilterDto.getDepositMax(), requestReviewFilterDto.getMaintenanceFeeMin(), requestReviewFilterDto.getMaintenanceFeeMax(), requestReviewFilterDto.getRoomType(), requestReviewFilterDto.getFloor(), requestReviewFilterDto.getRoomSize(), requestReviewFilterDto.getRoomStructure(), requestReviewFilterDto.getTransactionType())
+                .stream()
+                .map(review -> new ReviewDto(review))
+                .collect(Collectors.toList());
+
+        return ReviewListResponseDto.of(reviews);
+
+
+        //roomType, @Param("floor") Floor floor, @Param("roomSize") RoomSize roomSize, @Param("roomStructure") RoomStructure roomStructure
+    }
+
+
 //    public ReviewListResponseDto getReviews() {
 //        List<ReviewDto> reviews = reviewRepository.findAll().stream()
 //                .map(review -> new ReviewDto(review))
