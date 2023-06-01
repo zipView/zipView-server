@@ -27,8 +27,15 @@ public class Review extends BaseEntity {
     @NotNull
     private User user;*/
 
-    @NotNull
-    private Integer price;
+    // 숫자 범위 refec
+    private int rentMin;
+    private int rentMax;
+
+    private int depositMin;
+    private int depositMax;
+
+    private int maintenanceFeeMin;
+    private int maintenanceFeeMax;
 
     @NotNull
     private String title;
@@ -45,8 +52,7 @@ public class Review extends BaseEntity {
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL)
     private List<LikeReview> reviewLikeList = new ArrayList<>();
 
-    @NotNull
-    private Integer likeNum;
+    private int likeNum;
 
     @Enumerated(EnumType.STRING)
     private RoomType roomType;
@@ -54,10 +60,19 @@ public class Review extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Residence residence;
 
-    @NotNull
-    private Integer report;
+    private int report;
 
+    @Enumerated(EnumType.STRING)
+    private Floor floor;
 
+    @Enumerated(EnumType.STRING)
+    private RoomSize roomSize;
+
+    @Enumerated(EnumType.STRING)
+    private RoomStructure roomStructure;
+
+    @Enumerated(EnumType.STRING)
+    private TransactionType transactionType;
 
 
 
@@ -80,27 +95,45 @@ public class Review extends BaseEntity {
         this.report +=1 ;
     }
 
-    public static Review createReivew(int price, String content, String title, int likeNum, RoomType roomType, Residence residence, int report) {
+    public static Review createReivew(int rentMin, int rentMax,  int depositMin, int depositMax, int maintenanceFeeMin, int maintenanceFeeMax, String content, String title, int likeNum, RoomType roomType, Residence residence, int report, Floor floor, RoomSize roomSize, RoomStructure roomStructure, TransactionType transactionType) {
         Review review = new Review();
   //      review.id = id;
     //    review.user = user;
-        review.price = price;
+        review.rentMin = rentMin;
+        review.rentMax = rentMax;
+        review.depositMin = depositMin;
+        review.depositMax = depositMax;
+        review.maintenanceFeeMin = maintenanceFeeMin;
+        review.maintenanceFeeMax = maintenanceFeeMax;
         review.title = title;
         review.content = content;
         review.likeNum = likeNum;
         review.roomType = roomType;
         review.residence = residence;
         review.report = report;
+        review.floor = floor;
+        review.roomSize = roomSize;
+        review.roomStructure = roomStructure;
+        review.transactionType = transactionType;
         return review;
     }
 
-    public void fixReview(int price, String content, String title, RoomType roomType, Residence residence) {
+    public void fixReview(int rentMin, int rentMax,  int depositMin, int depositMax, int maintenanceFeeMin, int maintenanceFeeMax, String content, String title, RoomType roomType, Residence residence,  Floor floor, RoomSize roomSize, RoomStructure roomStructure, TransactionType transactionType) {
 
-        this.price = price;
+        this.rentMin = rentMin;
+        this.rentMax = rentMax;
+        this.depositMin = depositMin;
+        this.depositMax = depositMax;
+        this.maintenanceFeeMin = maintenanceFeeMin;
+        this.maintenanceFeeMax = maintenanceFeeMax;
         this.title = title;
         this.content = content;
         this.roomType = roomType;
         this.residence = residence;
+        this.roomStructure = roomStructure;
+        this.floor = floor;
+        this.roomSize = roomSize;
+        this.transactionType = transactionType;
 
     }
 

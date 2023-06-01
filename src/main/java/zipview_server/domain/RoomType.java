@@ -7,8 +7,11 @@ import lombok.Getter;
 @Getter
 public enum RoomType {
     OFFICETEL("Officetel"),
-    STUDIO("Studio"),
-    APARTMENT("Apartment");
+    ONEROOM("Oneroom"),
+    TWOROOM("Tworoom"),
+    THREEROOM("Threeroom"),
+    URBANHOUSE("Urbanhouse")
+    ;
 
     private String roomType;
 }

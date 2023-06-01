@@ -108,6 +108,13 @@ public class ReviewController {
     }
 
 
+    @PostMapping("/review/filter")
+    public ResponseEntity<ReviewListResponse> getFilterReview(@Valid @RequestBody RequestReviewFilterDto requestReviewFilterDto) {
+        ReviewListResponseDto response = reviewService.getFilterReview(requestReviewFilterDto);
+
+        return  ReviewListResponse.newResponse(REVIEW_BEST_SUCCESS, response);
+    }
+
 
 
 

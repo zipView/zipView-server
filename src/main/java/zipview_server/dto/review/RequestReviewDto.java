@@ -5,9 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
-import zipview_server.domain.Residence;
-import zipview_server.domain.ReviewImage;
-import zipview_server.domain.RoomType;
+import zipview_server.domain.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,16 +16,22 @@ import java.util.List;
 public class RequestReviewDto {
 
     private Long id;
-    private int price;
+    private int rentMin;
+    private int rentMax;
+    private int depositMin;
+    private int depositMax;
+    private int maintenanceFeeMin;
+    private int maintenanceFeeMax;
     private String title;
     private String content;
     private int likeNum;
     private RoomType roomType;
     private Residence residence;
+    private Floor floor;
+    private RoomSize roomSize;
+    private RoomStructure roomStructure;
+    private TransactionType transactionType;
     private int report;
-
-
-
 
     private RequestReviewDto(Long id) {
         this.id = id;
