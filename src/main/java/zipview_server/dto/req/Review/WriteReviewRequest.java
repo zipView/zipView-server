@@ -9,6 +9,8 @@ import java.util.List;
 @Data
 public class RequestReview {
  //   private Long id;
+    private String userId;
+    private String userEmail;
     private List<MultipartFile> image = new ArrayList<>();
    private int rentMin;
    private int rentMax;

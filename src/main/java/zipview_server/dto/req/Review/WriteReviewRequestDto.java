@@ -16,6 +16,8 @@ import java.util.List;
 public class RequestReviewDto {
 
     private Long id;
+    private String userId;
+    private String userEmail;
     private int rentMin;
     private int rentMax;
     private int depositMin;
