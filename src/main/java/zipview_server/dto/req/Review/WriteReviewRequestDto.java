@@ -1,19 +1,17 @@
-package zipview_server.dto.review;
+package zipview_server.dto.req.Review;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
 import zipview_server.domain.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RequestReviewDto {
+//@Builder
+public class WriteReviewRequestDto {
 
     private Long id;
     private String userId;
@@ -35,15 +33,19 @@ public class RequestReviewDto {
     private TransactionType transactionType;
     private int report;
 
-    private RequestReviewDto(Long id) {
+    private WriteReviewRequestDto(Long id) {
         this.id = id;
 
     }
 
-    public static RequestReviewDto of(Long reviewId) {
-        return new RequestReviewDto(reviewId);
+    public static WriteReviewRequestDto of(Long reviewId) {
+        return new WriteReviewRequestDto(reviewId);
     }
 
+
+   /* public Review toReview(Review review) {
+        return Review.of(review);
+    }*/
 
   /*  public RequestReviewDto(int price, String content, String title, List<String> images, int likenum, RoomType roomType, Residence residence) {
     }
@@ -60,16 +62,7 @@ public class RequestReviewDto {
 */
 
 /*
-    public CommunityReview toCommunityReivew() {
-        return CommunityReview.builder()
-                .price(price)
-                .content(content)
-                .title(title)
-                .likeNum(likeNum)
-                .roomType(roomType)
-                .residence(residence)
-                .build();
-    }
+
     public List<ReviewImage> toReviewImages(CommunityReview communityReview) {
         List<ReviewImage> reviewImages = new ArrayList<>();
         for(int i=0; i< images.size(); i++) {

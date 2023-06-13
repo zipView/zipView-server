@@ -1,6 +1,7 @@
-package zipview_server.dto.review;
+package zipview_server.dto.res.Review;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import zipview_server.dto.review.ReviewDto;
 
 import java.util.List;
 

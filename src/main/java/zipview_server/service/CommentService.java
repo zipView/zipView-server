@@ -3,13 +3,13 @@ package zipview_server.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 import zipview_server.constants.ExceptionCode;
 import zipview_server.domain.Comment;
 import zipview_server.domain.CommentReport;
 import zipview_server.domain.Review;
-import zipview_server.domain.ReviewReport;
+import zipview_server.dto.req.Comment.WriteCommentRequest;
+import zipview_server.dto.req.Comment.WriteCommentRequestDto;
+import zipview_server.dto.res.Comment.CommentListResponseDto;
 import zipview_server.dto.review.*;
 import zipview_server.exception.CustomException;
 import zipview_server.repository.CommentReportRepository;
@@ -32,8 +32,6 @@ public class CommentService {
     @Transactional
     public void save(WriteCommentRequestDto requestDto, Long reviewId) {
 
-        System.out.println(reviewId);
-        System.out.println(requestDto.getContent());
         Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new CustomException(ExceptionCode.REVIEW_NOT_FOUND));
 

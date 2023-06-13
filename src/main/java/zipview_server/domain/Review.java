@@ -3,7 +3,9 @@ package zipview_server.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import zipview_server.dto.req.Review.WriteReviewRequestDto;
 import zipview_server.dto.review.ReviewDto;
+import zipview_server.zipview.user.dto.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -12,7 +14,6 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor
-//@Builder
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "review")
@@ -82,6 +83,7 @@ public class Review extends BaseEntity {
             reviewImage.setReview(this);
     }
 
+    //이미지 수정 Refec
     public void setReviewImage(ReviewImage reviewImage) {
         reviewImages.add(reviewImage);
         reviewImage.setReview(this);
@@ -95,10 +97,10 @@ public class Review extends BaseEntity {
         this.report +=1 ;
     }
 
-    public static Review createReivew(int rentMin, int rentMax,  int depositMin, int depositMax, int maintenanceFeeMin, int maintenanceFeeMax, String content, String title, int likeNum, RoomType roomType, Residence residence, int report, Floor floor, RoomSize roomSize, RoomStructure roomStructure, TransactionType transactionType) {
+    public static Review createReivew( int rentMin, int rentMax,  int depositMin, int depositMax, int maintenanceFeeMin, int maintenanceFeeMax, String content, String title, int likeNum, RoomType roomType, Residence residence, int report, Floor floor, RoomSize roomSize, RoomStructure roomStructure, TransactionType transactionType) {
         Review review = new Review();
   //      review.id = id;
-    //    review.user = user;
+      //  review.user = user;
         review.rentMin = rentMin;
         review.rentMax = rentMax;
         review.depositMin = depositMin;
@@ -118,25 +120,49 @@ public class Review extends BaseEntity {
         return review;
     }
 
-    public void fixReview(int rentMin, int rentMax,  int depositMin, int depositMax, int maintenanceFeeMin, int maintenanceFeeMax, String content, String title, RoomType roomType, Residence residence,  Floor floor, RoomSize roomSize, RoomStructure roomStructure, TransactionType transactionType) {
+    public void fixReview(WriteReviewRequestDto writeReviewRequestDto) {
 
-        this.rentMin = rentMin;
-        this.rentMax = rentMax;
-        this.depositMin = depositMin;
-        this.depositMax = depositMax;
-        this.maintenanceFeeMin = maintenanceFeeMin;
-        this.maintenanceFeeMax = maintenanceFeeMax;
-        this.title = title;
-        this.content = content;
-        this.roomType = roomType;
-        this.residence = residence;
-        this.roomStructure = roomStructure;
-        this.floor = floor;
-        this.roomSize = roomSize;
-        this.transactionType = transactionType;
+        this.rentMin = writeReviewRequestDto.getRentMin();
+        this.rentMax = writeReviewRequestDto.getRentMax();
+        this.depositMin = writeReviewRequestDto.getDepositMin();
+        this.depositMax = writeReviewRequestDto.getDepositMax();
+        this.maintenanceFeeMin = writeReviewRequestDto.getMaintenanceFeeMin();
+        this.maintenanceFeeMax = writeReviewRequestDto.getMaintenanceFeeMax();
+        this.title = writeReviewRequestDto.getTitle();
+        this.content = writeReviewRequestDto.getContent();
+        this.roomType = writeReviewRequestDto.getRoomType();
+        this.residence = writeReviewRequestDto.getResidence();
+        this.roomStructure = writeReviewRequestDto.getRoomStructure();
+        this.floor = writeReviewRequestDto.getFloor();
+        this.roomSize = writeReviewRequestDto.getRoomSize();
+        this.transactionType = writeReviewRequestDto.getTransactionType();
 
     }
 
+    public static Review of(WriteReviewRequestDto writeReviewRequestDto) {
+        Review review = new Review();
+        review.maintenanceFeeMax = writeReviewRequestDto.getMaintenanceFeeMax();
+        review.maintenanceFeeMin = writeReviewRequestDto.getMaintenanceFeeMin();
+        review.rentMax = writeReviewRequestDto.getRentMax();
+        review.rentMin = writeReviewRequestDto.getRentMin();
+        review.depositMax = writeReviewRequestDto.getDepositMax();
+        review.depositMin = writeReviewRequestDto.getDepositMin();
+        review.transactionType = writeReviewRequestDto.getTransactionType();
+        review.roomSize = writeReviewRequestDto.getRoomSize();
+        review.floor = writeReviewRequestDto.getFloor();
+        review.roomStructure = writeReviewRequestDto.getRoomStructure();
+        review.likeNum = writeReviewRequestDto.getLikeNum();
+        review.report = writeReviewRequestDto.getReport();
+        review.roomType = writeReviewRequestDto.getRoomType();
+        review.title = writeReviewRequestDto.getTitle();
+        review.content = writeReviewRequestDto.getContent();
+        review.residence = writeReviewRequestDto.getResidence();
+
+//        review.report = report;
+
+        return review;
+
+    }
 
 }
 

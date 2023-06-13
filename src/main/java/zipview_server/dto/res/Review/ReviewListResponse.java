@@ -1,4 +1,4 @@
-package zipview_server.dto.review;
+package zipview_server.dto.res.Review;
 
 import lombok.Getter;
 import org.springframework.http.ResponseEntity;

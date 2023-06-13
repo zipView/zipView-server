@@ -1,10 +1,13 @@
 package zipview_server.controller;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import zipview_server.dto.review.*;
+import zipview_server.dto.req.Comment.WriteCommentRequest;
+import zipview_server.dto.req.Comment.WriteCommentRequestDto;
+import zipview_server.dto.res.Comment.CommentListResponse;
+import zipview_server.dto.res.Comment.CommentListResponseDto;
+import zipview_server.dto.res.Comment.WriteCommentResponse;
 import zipview_server.service.CommentService;
 
 import javax.validation.Valid;

@@ -1,14 +1,8 @@
-package zipview_server.dto.review;
+package zipview_server.dto.res.Review;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import zipview_server.constants.ExceptionCode;
 import zipview_server.constants.SuccessCode;
 import zipview_server.dto.BaseResponse;
-
-import java.time.LocalDateTime;
 
 public class ReviewResponse extends BaseResponse {
 

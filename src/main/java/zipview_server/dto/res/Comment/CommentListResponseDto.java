@@ -1,14 +1,10 @@
-package zipview_server.dto.review;
+package zipview_server.dto.res.Comment;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import zipview_server.domain.Comment;
+import zipview_server.dto.review.CommentListDto;
 
-import java.time.DayOfWeek;
-import java.time.format.DateTimeFormatter;
-import java.time.format.TextStyle;
 import java.util.List;
-import java.util.Locale;
 
 @Getter
 @NoArgsConstructor

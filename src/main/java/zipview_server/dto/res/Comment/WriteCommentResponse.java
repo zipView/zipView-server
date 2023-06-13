@@ -1,8 +1,7 @@
-package zipview_server.dto.review;
+package zipview_server.dto.res.Comment;
 
 import org.springframework.http.ResponseEntity;
 import zipview_server.constants.SuccessCode;
-import zipview_server.domain.BaseEntity;
 import zipview_server.dto.BaseResponse;
 
 public class WriteCommentResponse extends BaseResponse {

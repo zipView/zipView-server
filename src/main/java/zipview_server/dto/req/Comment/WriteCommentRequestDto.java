@@ -1,4 +1,4 @@
-package zipview_server.dto.review;
+package zipview_server.dto.req.Comment;
 
 
 import lombok.AllArgsConstructor;

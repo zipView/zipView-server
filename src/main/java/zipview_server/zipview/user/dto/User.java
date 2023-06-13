@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.lang.Nullable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -23,6 +24,7 @@ public class User extends BaseEntity {
     }
 
     @Id
+    @Column(name ="user_id")
     private String id;
     private String email;
     private String name;

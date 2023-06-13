@@ -11,6 +11,8 @@ import zipview_server.domain.*;
 public class RequestReviewFilterDto {
 
     private Long id;
+    private String userId;
+    private String userEmail;
     private int rentMin;
     private int rentMax;
     private int depositMin;

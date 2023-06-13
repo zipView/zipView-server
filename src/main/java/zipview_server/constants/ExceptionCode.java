@@ -28,7 +28,8 @@ public enum ExceptionCode {
     REVIEW_NOT_FOUND(NOT_FOUND, "존재하지 않는 게시글입니다"),
     COMMENT_NOT_FOUND(NOT_FOUND, "존재하지 않는 게시글입니다"),
     ALREADY_REPORT_REVIEW(CONFLICT, "이미 신고한 리뷰입니다."),
-    ALREADY_REPORT_COMMENT(CONFLICT, "이미 신고한 코멘트입니다.");
+    ALREADY_REPORT_COMMENT(CONFLICT, "이미 신고한 코멘트입니다."),
+    USER_NOT_FOUND(NOT_FOUND, "유저를 찾을 수 없습니다.");
 
     private final HttpStatus status;
     private final String msg;

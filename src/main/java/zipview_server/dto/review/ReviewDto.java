@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
 public class ReviewDto {
 
     private Long id;
+    private String userId;
+    private String userEmail;
     private int rentMin;
     private int rentMax;
     private int depositMin;
@@ -35,6 +37,8 @@ public class ReviewDto {
 
     public ReviewDto(Review review) {
         this.id = review.getId();
+     //   this.userId = review.getUser().getId();
+     //   this.userEmail = review.getUser().getEmail();
         this.rentMin = review.getRentMin();
         this.rentMax = review.getRentMax();
         this.depositMin = review.getDepositMin();
