@@ -36,23 +36,29 @@ public class Comment extends BaseEntity {
     private List<CommentReport> commentList = new ArrayList<>();
 
     @NotNull
+    @JsonFormat(pattern = "yyyy/MM/dd HH:mm", timezone = "Asia/Seoul")
+    private LocalDateTime createTime;
+
+    @NotNull
     private String content;
 
     @NotNull
     private Integer report;
 
 
-    private Comment(Review review, Long id,  String content, int report) {
+    private Comment(Review review, Long id,  String content, LocalDateTime createTime, int report) {
         this.id = id;
         this.review = review;
         this.content = content;
+        this.createTime = createTime;
         this.report = report;
     }
 
-    public static Comment createComment(Review review, Long id, String content, int report) {
+    public static Comment createComment(Review review, Long id, String content, LocalDateTime createTime, int report) {
         Comment comment = new Comment();
         comment.id = id;
         comment.review = review;
+        comment.createTime = createTime;
         comment.content = content;
         comment.report = report;
         return comment;
@@ -63,8 +69,8 @@ public class Comment extends BaseEntity {
     }
 
 
-    public static Comment of(Review review, Long id, String content, int report) {
-        return new Comment(review, id, content, report);
+    public static Comment of(Review review, Long id, String content, LocalDateTime createTime, int report) {
+        return new Comment(review, id, content, createTime, report);
     }
 
     public void fixComment(String content) {

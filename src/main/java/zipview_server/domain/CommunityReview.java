@@ -11,8 +11,8 @@ import javax.persistence.Entity;
 @Entity
 public class CommunityReview extends Review{
   /*  @Builder
-    public CommunityReview(int price, String content, String title, int likeNum, RoomType roomType, Residence residence) {
-        super(price, content, title, likeNum, roomType, residence);
+    public CommunityReview(int price, String content, String title, int heart, RoomType roomType, Residence residence) {
+        super(price, content, title, heart, roomType, residence);
 
     }
 }

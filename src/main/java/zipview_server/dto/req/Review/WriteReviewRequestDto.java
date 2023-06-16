@@ -24,7 +24,7 @@ public class WriteReviewRequestDto {
     private int maintenanceFeeMax;
     private String title;
     private String content;
-    private int likeNum;
+    private int heart;
     private RoomType roomType;
     private Residence residence;
     private Floor floor;
@@ -47,15 +47,15 @@ public class WriteReviewRequestDto {
         return Review.of(review);
     }*/
 
-  /*  public RequestReviewDto(int price, String content, String title, List<String> images, int likenum, RoomType roomType, Residence residence) {
+  /*  public RequestReviewDto(int price, String content, String title, List<String> images, int heart, RoomType roomType, Residence residence) {
     }
 
-    public RequestReviewDto(int price, String content, String title, List<String> images, int likeNum, RoomType roomType, Residence residence) {
+    public RequestReviewDto(int price, String content, String title, List<String> images, int heart, RoomType roomType, Residence residence) {
         this.price = price;
         this.content = content;
         this.title = title;
         this.images = images;
-        this.likeNum = likeNum;
+        this.heart = heart;
         this.roomType = roomType;
         this.residence = residence;
     }

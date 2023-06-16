@@ -34,7 +34,7 @@ public class LikeReview extends BaseEntity{
 
     public void unLikeReview (Review review) {
         this.status = false;
-        review.setLikeNum(review.getLikeNum()-1);
+        review.setHeart(review.getHeart()-1);
 
     }
 

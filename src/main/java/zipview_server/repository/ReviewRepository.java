@@ -20,7 +20,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     @Query("select r from Review r where r.id = :id")
     Review getReview(@Param("id") Long Id);
 
-    Page<Review> findByLikeNumGreaterThanEqual(Pageable pageable, int num);
+    Page<Review> findByHeartGreaterThanEqual(Pageable pageable, int num);
 
     @Query("select r from Review r where r.title LIKE %:keyword% OR r.content LIKE %:keyword%")
     Page<Review> findAllReviewSerch(Pageable pageable, @Param("keyword") String keyword);

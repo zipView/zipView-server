@@ -53,7 +53,7 @@ public class Review extends BaseEntity {
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL)
     private List<LikeReview> reviewLikeList = new ArrayList<>();
 
-    private int likeNum;
+    private int heart;
 
     @Enumerated(EnumType.STRING)
     private RoomType roomType;
@@ -89,15 +89,15 @@ public class Review extends BaseEntity {
         reviewImage.setReview(this);
     }
 
-    public void setLikeNum(int like) {
-        this.likeNum = like;
+    public void setHeart(int heart) {
+        this.heart = heart;
     }
 
     public void increaseReport() {
         this.report +=1 ;
     }
 
-    public static Review createReivew( int rentMin, int rentMax,  int depositMin, int depositMax, int maintenanceFeeMin, int maintenanceFeeMax, String content, String title, int likeNum, RoomType roomType, Residence residence, int report, Floor floor, RoomSize roomSize, RoomStructure roomStructure, TransactionType transactionType) {
+ /*   public static Review createReivew( int rentMin, int rentMax,  int depositMin, int depositMax, int maintenanceFeeMin, int maintenanceFeeMax, String content, String title, int heart, RoomType roomType, Residence residence, int report, Floor floor, RoomSize roomSize, RoomStructure roomStructure, TransactionType transactionType) {
         Review review = new Review();
   //      review.id = id;
       //  review.user = user;
@@ -109,7 +109,7 @@ public class Review extends BaseEntity {
         review.maintenanceFeeMax = maintenanceFeeMax;
         review.title = title;
         review.content = content;
-        review.likeNum = likeNum;
+        review.heart = heart;
         review.roomType = roomType;
         review.residence = residence;
         review.report = report;
@@ -119,7 +119,7 @@ public class Review extends BaseEntity {
         review.transactionType = transactionType;
         return review;
     }
-
+*/
     public void fixReview(WriteReviewRequestDto writeReviewRequestDto) {
 
         this.rentMin = writeReviewRequestDto.getRentMin();
@@ -151,7 +151,7 @@ public class Review extends BaseEntity {
         review.roomSize = writeReviewRequestDto.getRoomSize();
         review.floor = writeReviewRequestDto.getFloor();
         review.roomStructure = writeReviewRequestDto.getRoomStructure();
-        review.likeNum = writeReviewRequestDto.getLikeNum();
+        review.heart = writeReviewRequestDto.getHeart();
         review.report = writeReviewRequestDto.getReport();
         review.roomType = writeReviewRequestDto.getRoomType();
         review.title = writeReviewRequestDto.getTitle();

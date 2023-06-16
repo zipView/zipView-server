@@ -15,6 +15,8 @@ import zipview_server.exception.CustomException;
 import zipview_server.repository.CommentReportRepository;
 import zipview_server.repository.CommentRepository;
 import zipview_server.repository.ReviewRepository;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -35,7 +37,7 @@ public class CommentService {
         Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new CustomException(ExceptionCode.REVIEW_NOT_FOUND));
 
-       Comment comment = Comment.createComment(review, requestDto.getId(), requestDto.getContent(), requestDto.getReport());
+       Comment comment = Comment.createComment(review, requestDto.getId(), requestDto.getContent(),  LocalDateTime.now(), requestDto.getReport());
         commentRepository.save(comment);
     }
 
@@ -44,7 +46,7 @@ public class CommentService {
                 .orElseThrow(() -> new CustomException(ExceptionCode.REVIEW_NOT_FOUND));
 
         List<CommentListDto> comments = commentRepository.findAllByReview(review).stream()
-                .map(comment -> CommentListDto.of(comment.getId(), comment.getContent(), comment.getReport()))
+                .map(comment -> CommentListDto.of(comment.getId(), comment.getContent(), comment.getCreateTime(), comment.getReport()))
                 .collect(Collectors.toList());
 
         return CommentListResponseDto.of(comments);

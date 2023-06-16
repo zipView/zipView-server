@@ -21,7 +21,7 @@ public class WriteReviewRequest {
     private int maintenanceFeeMax;
     private String content;
     private String title;
-    private int likeNum;
+    private int heart;
     private RoomType roomType;
     private Residence residence;
     private Floor floor;
@@ -40,7 +40,7 @@ public class WriteReviewRequest {
         review.maintenanceFeeMax = maintenanceFeeMax;
         review.title = title;
         review.content = content;
-        review.likeNum = likeNum;
+        review.heart = heart;
         review.roomType = roomType;
         review.residence = residence;
         review.report = report;
@@ -50,7 +50,7 @@ public class WriteReviewRequest {
         review.transactionType = transactionType;
 
     public RequestReviewDto toRequestReviewDto(List<String> images) {
-        return RequestReviewDto.of(price, content, title, images, likenum, roomType, residence);
+        return RequestReviewDto.of(price, content, title, images, like, roomType, residence);
     }*/
 
     /*public WriteReviewRequestDto toWriteReviewRequestDto() {
@@ -59,7 +59,7 @@ public class WriteReviewRequest {
                 .depositMax(depositMax)
                 .depositMin(depositMin)
                 .floor(floor)
-                .likeNum(likeNum)
+                .like(like)
                 .maintenanceFeeMax(maintenanceFeeMax)
                 .maintenanceFeeMin(maintenanceFeeMin)
                 .rentMax(rentMax)

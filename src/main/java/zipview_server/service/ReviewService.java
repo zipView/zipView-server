@@ -122,13 +122,13 @@ public class ReviewService {
     }
 
     @Transactional
-    public String likeReview(Long reviewId) {
+    public String likeReview(Long reviewId) { //좋아요 완료, 취소 분리 ?
         Review review = reviewRepository.findById(reviewId)
                         .orElseThrow(() -> new CustomException(REVIEW_NOT_FOUND));
 
         //유저 연결
         if(likeReviewRepository.findByReview(review) == null) {
-            review.setLikeNum(review.getLikeNum()+1);
+            review.setHeart(review.getHeart()+1);
             LikeReview likeReview = LikeReview.createLikeReview(review);
             likeReviewRepository.save(likeReview);
             return "좋아요 완료";
@@ -141,18 +141,18 @@ public class ReviewService {
     }
 
     public ReviewListResponseDto getBestReviews(Pageable pageable) {
-        Page<Review> reviews = reviewRepository.findByLikeNumGreaterThanEqual(pageable, 10);
+        Page<Review> reviews = reviewRepository.findByHeartGreaterThanEqual(pageable, 10);
         List<ReviewDto> reviewList = new ArrayList<>();
       //  reviews.stream().map(review -> new ReviewDto(review))
        //         .collect(Collectors.toList());
         reviews.stream().forEach(i -> reviewList.add(new ReviewDto(i)));
 
-       // System.out.println(reviewList.get(0).getLikeNum());
+       // System.out.println(reviewList.get(0).getLike());
         return ReviewListResponseDto.of(reviewList);
     }
 
     public ReviewListResponseDto getFilterReview(RequestReviewFilterDto requestReviewFilterDto) {
-
+    //refec
         List<ReviewDto> reviews = filterRepository.getReview(requestReviewFilterDto.getRentMin(), requestReviewFilterDto.getRentMax(), requestReviewFilterDto.getDepositMin(), requestReviewFilterDto.getDepositMax(), requestReviewFilterDto.getMaintenanceFeeMin(), requestReviewFilterDto.getMaintenanceFeeMax(), requestReviewFilterDto.getRoomType(), requestReviewFilterDto.getFloor(), requestReviewFilterDto.getRoomSize(), requestReviewFilterDto.getRoomStructure(), requestReviewFilterDto.getTransactionType())
                 .stream()
                 .map(review -> new ReviewDto(review))

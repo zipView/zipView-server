@@ -25,7 +25,7 @@ public class ReviewDto {
     private int maintenanceFeeMax;
     private String title;
     private String content;
-    private int likeNum;
+    private int heart;
     private List<ReviewImageDto> reviewImages;
     private RoomType roomType;
     private Residence residence;
@@ -47,7 +47,7 @@ public class ReviewDto {
         this.maintenanceFeeMax = review.getMaintenanceFeeMax();
         this.content = review.getContent();
         this.title = review.getTitle();
-        this.likeNum = review.getLikeNum();
+        this.heart = review.getHeart();
         this.reviewImages = review.getReviewImages().stream()
                .map(reviewImage -> new ReviewImageDto(reviewImage))
                .collect(Collectors.toList());

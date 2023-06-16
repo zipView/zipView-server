@@ -14,6 +14,7 @@ public enum SuccessCode {
     REVIEW_FIX_SUCCESS(OK, "리뷰 수정에 성공하셨습니다."),
     REVIEW_REPORT_SUCCESS(OK, "리뷰 신고에 성공하셨습니다."),
     REVIEW_LIKE_SUCCESS(OK, "리뷰 좋아요에 성공하셨습니다."),
+    REVIEW_UNLIKE_SUCCESS(OK, "리뷰 좋아요 취소에 성공하셨습니다."),
     LOAD_REVIEW_BEST_SUCCESS(OK, "인기있는 리뷰 조회에 성공하셨습니다."),
     LOAD_REVIEW_HOME_SEARCH_SUCCESS(OK, "홈 화면 리뷰 조회에 성공하셨습니다."),
     LOAD_REVIEW_FILTER_SUCCESS(OK, "필터링 리뷰 조회에 성공하셨습니다."),
