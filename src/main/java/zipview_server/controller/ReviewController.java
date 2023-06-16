@@ -97,22 +97,22 @@ public class ReviewController {
         return ReviewResponse.newResponse(REVIEW_LIKE_SUCCESS);
     }
 
-    @GetMapping("/review/best")
-    public ResponseEntity<ReviewListResponse> bestReview(@PageableDefault(size = 5, sort = "likeNum", direction = Sort.Direction.DESC) Pageable pageable) {
+    @GetMapping("/reviews/best")
+    public ResponseEntity<ReviewListResponse> bestReview(@PageableDefault(size = 5, sort = "heart", direction = Sort.Direction.DESC) Pageable pageable) {
         ReviewListResponseDto response = reviewService.getBestReviews(pageable);
 
         return  ReviewListResponse.newResponse(LOAD_REVIEW_BEST_SUCCESS, response);
     }
 
 
-    @PostMapping("/review/filter")
+    @PostMapping("/reviews/filter")
     public ResponseEntity<ReviewListResponse> getFilterReview(@Valid @RequestBody RequestReviewFilterDto requestReviewFilterDto) {
         ReviewListResponseDto response = reviewService.getFilterReview(requestReviewFilterDto);
 
         return  ReviewListResponse.newResponse(LOAD_REVIEW_FILTER_SUCCESS, response);
     }
 
-    @GetMapping("/home/review/search")
+    @GetMapping("/home/reviews/search")
     public ResponseEntity<ReviewListResponse> getSerchReview(@PageableDefault(size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable
     , @RequestParam String keyword) {
         ReviewListResponseDto response = reviewService.getSerchReviews(pageable, keyword);
