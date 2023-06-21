@@ -124,7 +124,7 @@ public class UserService {
     public void setKeyword(String id, patchKeywordReq patchKeywordReq) throws BaseException {
         try{
             User user = userRepository.findOne(id);
-            if(patchKeywordReq.getKeyword1()==null && patchKeywordReq.getKeyword2()==null & patchKeywordReq.getKeyword3()==null){
+            if(patchKeywordReq.getKeyword1()==null && patchKeywordReq.getKeyword2()==null & patchKeywordReq.getKeyword3()==null) {
                 throw new BaseException(EMPTY_KEYWORD);
             }
             user.setKeyword1(patchKeywordReq.getKeyword1());
