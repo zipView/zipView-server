@@ -2,11 +2,13 @@ package zipview_server.zipview.user;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import zipview_server.config.BaseException;
 import zipview_server.config.BaseResponse;
 import static zipview_server.config.BaseResponseStatus.*;
 
+import zipview_server.zipview.security.MemberRepository;
 import zipview_server.zipview.security.MemberService;
 import zipview_server.zipview.security.dto.MemberResponseDto;
 
@@ -20,7 +22,19 @@ import zipview_server.zipview.user.dto.*;
 public class UserController {
     private final UserService userService;
     private final MemberService memberService;
+    private final MemberRepository memberRepository;
 
+    @GetMapping("/auth/exist")
+    public BaseResponse<String> checkMember(@RequestParam String email){
+        String result;
+
+        if(memberRepository.existsByEmail(email)){
+            result="회원";
+        }else {
+            result="비회원";
+        }
+        return new BaseResponse<>(result);
+    }
 
 
 

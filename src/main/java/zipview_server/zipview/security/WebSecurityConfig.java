@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.stereotype.Component;
+import zipview_server.zipview.security.dto.Authority;
 
 import javax.servlet.http.HttpSession;
 
@@ -43,7 +44,7 @@ public class WebSecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/auth/**").permitAll()
-                .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .apply(new JwtSecurityConfig(tokenProvider));

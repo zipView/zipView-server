@@ -17,7 +17,8 @@ import javax.persistence.*;
 public class Notice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int noIdx;
+    private Long noIdx;
+    private String userId;
     private String title;
     private String content;
 
@@ -28,7 +29,7 @@ public class Notice {
     @LastModifiedDate
     private String updatedAt;
 
-    public Notice(int noIdx, String title, String content, String createdAt, String updatedAt) {
+    public Notice(Long noIdx, String title, String content, String createdAt, String updatedAt) {
         this.noIdx = noIdx;
         this.title = title;
         this.content = content;

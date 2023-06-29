@@ -27,18 +27,7 @@ public class AuthController {
         return ResponseEntity.ok(authService.login(requestDto));
     }
 
-    //수정 필요
-    @GetMapping("/exist")
-    public ResponseEntity<String> checkMember(@RequestParam String email){
-        String result;
 
-        if(memberRepository.existsByEmail(email)){
-            result="회원";
-        }else {
-            result="비회원";
-        }
-        return ResponseEntity.ok(result);
-    }
 
     @PostMapping("/findId")
     public ResponseEntity<PostUserIdRes> findEmail(@RequestBody PostUserIdReq postUserIdReq) {
