@@ -18,6 +18,8 @@ import org.springframework.web.client.RestTemplate;
 import zipview_server.config.BaseException;
 import zipview_server.utils.Decrypt;
 import zipview_server.utils.Encrypt;
+import zipview_server.zipview.security.UserRepository;
+import zipview_server.zipview.security.dto.Member;
 import zipview_server.zipview.user.dto.JwtService;
 import zipview_server.zipview.user.dto.*;
 
@@ -45,52 +47,23 @@ public class UserService {
     }
 
 
+
     @Transactional
-    public String join(User user) throws BaseException {
-        validateDuplicateMember(user);
-        validateExistNickname(user);
-        String pwd;
-        try {
-            pwd = Encrypt.encryptAES256(Objects.requireNonNull(user.getPassword()));
-            user.setPassword(pwd);
-        } catch (Exception ignored) {
-            throw new BaseException(FAIL_ENCRYPT_PWD);
-        }
-        userRepository.save(user);
-        return user.getId();
-    }
-    @Transactional
-    public String socialJoin(User user) throws BaseException {
+    public String socialJoin(Member user) throws BaseException {
         validateDuplicateMember(user);
         validateExistNickname(user);
         userRepository.save(user);
         return user.getId();
     }
 
-    @Transactional
-    public PostLoginRes login(PostLoginReq postLoginReq) throws Exception {
-        String repoPwd = userRepository.GetRepoPwd(postLoginReq.getEmail());
-        String repoId = userRepository.GetRepoId(postLoginReq.getEmail());
-        String pwd;
-        try{
-            pwd = Decrypt.decryptAES256(repoPwd);
-        } catch (Exception e) {
-            throw new BaseException(FAIL_DECRYPT_PWD);
-        }
-
-        if(postLoginReq.getPassword().equals(pwd)){
-            String jwt = jwtService.createJwt(repoId);
-            return new PostLoginRes(jwt);
-        }
-        else {
-            throw new BaseException(FAIL_TO_LOGIN);
-        }
-    }
 
     @Transactional
     public void updateNickname(String id,PatchInfo patchInfo) throws BaseException {
         try {
-            User user = userRepository.findOne(id);
+            if(patchInfo.getNickname().isEmpty()){
+                throw new BaseException(EMPTY_VALUE);
+            }
+            Member user = userRepository.findOne(id);
             user.setNickname(patchInfo.getNickname());
             userRepository.save(user);
         }catch (Exception e){
@@ -98,38 +71,16 @@ public class UserService {
         }
     }
 
-    @Transactional
-    public void updateUserPwd(String id, String pwd) throws BaseException {
-        try {
-            String newPwd = Encrypt.encryptAES256(pwd);
-            User user = userRepository.findOne(id);
-            user.setPassword(newPwd);
-            userRepository.save(user);
-        }catch (Exception e) {
-            throw new BaseException(FAIL_TO_CHANGE_PWD);
-        }
-    }
 
-    @Transactional
-    public void withdrawMember(String id) throws BaseException {
-        try{
-            User user = userRepository.findOne(id);
-            user.setIsDeleted("Y");
-            userRepository.save(user);
-        }catch (Exception e) {
-            throw new BaseException(FAIL_TO_WITHDRAW_MEMBER);
-        }
-    }
+
     @Transactional
     public void setKeyword(String id, patchKeywordReq patchKeywordReq) throws BaseException {
         try{
-            User user = userRepository.findOne(id);
+            Member user = userRepository.findOne(id);
             if(patchKeywordReq.getKeyword1()==null && patchKeywordReq.getKeyword2()==null & patchKeywordReq.getKeyword3()==null) {
                 throw new BaseException(EMPTY_KEYWORD);
             }
-            user.setKeyword1(patchKeywordReq.getKeyword1());
-            user.setKeyword2(patchKeywordReq.getKeyword2());
-            user.setKeyword3(patchKeywordReq.getKeyword3());
+            user.setKeyword(patchKeywordReq.getKeyword1(), patchKeywordReq.getKeyword2(), patchKeywordReq.getKeyword3());
             userRepository.save(user);
         }catch (Exception e) {
             throw new BaseException(FAIL_TO_SET_KEYWORD);
@@ -192,14 +143,14 @@ public class UserService {
     }
 
 
-    private void validateDuplicateMember(User user) throws BaseException {
-        List<User> findUser = userRepository.findByEmail(user.getEmail());
+    private void validateDuplicateMember(Member user) throws BaseException {
+        List<Member> findUser = userRepository.findByEmail(user.getEmail());
         if(!findUser.isEmpty()) {
             throw new BaseException(EXIST_EMAIL);
         }
     }
-    private void validateExistNickname(User user) throws BaseException {
-        List<User> findUser = userRepository.findByNickName(user.getNickname());
+    private void validateExistNickname(Member user) throws BaseException {
+        List<Member> findUser = userRepository.findByNickName(user.getNickname());
         if(!findUser.isEmpty()){
             throw new BaseException(EXIST_NICKNAME);
         }

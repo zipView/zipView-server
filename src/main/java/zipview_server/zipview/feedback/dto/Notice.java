@@ -20,8 +20,19 @@ public class Notice {
     private int noIdx;
     private String title;
     private String content;
+
+
+
     @CreatedDate
     private String createdAt;
     @LastModifiedDate
     private String updatedAt;
+
+    public Notice(int noIdx, String title, String content, String createdAt, String updatedAt) {
+        this.noIdx = noIdx;
+        this.title = title;
+        this.content = content;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 }

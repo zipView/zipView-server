@@ -1,18 +1,31 @@
 package zipview_server.zipview.user.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jdk.jshell.Snippet;
+import lombok.*;
 import org.springframework.lang.Nullable;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+<<<<<<< Updated upstream
 import javax.persistence.Entity;
 import javax.persistence.Id;
+=======
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+>>>>>>> Stashed changes
 
 @Entity
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@Data
 @NoArgsConstructor
-public class User extends BaseEntity {
+public class User {
     public User(String id, String email,String nickname,String name,String phone, String provider) {
         this.email = email;
         this.nickname = nickname;
@@ -36,6 +49,10 @@ public class User extends BaseEntity {
     private String keyword2;
     private String keyword3;
     private String isDeleted;
+    private String role;
+
+
+
 
 
 }

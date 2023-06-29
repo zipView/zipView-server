@@ -14,14 +14,15 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.mail.MailException;
 
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-import zipview_server.utils.Decrypt;
 import zipview_server.utils.Encrypt;
+import zipview_server.zipview.security.dto.Member;
 import zipview_server.zipview.sender.Dto.*;
-import zipview_server.zipview.user.UserRepository;
+import zipview_server.zipview.security.UserRepository;
 import zipview_server.zipview.user.dto.User;
 
 import javax.crypto.Mac;
@@ -44,6 +45,7 @@ import java.util.Random;
 @PropertySource("classpath:application.properties")
 public class SendService {
     private final String smsConfirmNum = createSmsKey();
+    private final PasswordEncoder passwordEncoder;
     private final JavaMailSender javaMailSender;
     private final String ePw = getTempPwd();
     private final UserRepository userRepository;
@@ -141,10 +143,9 @@ public class SendService {
         MimeMessage message = createMessage(postEmailReq.getEmail());
         try{
             javaMailSender.send(message); // 메일 발송
-            String newPwd = Encrypt.encryptAES256(ePw);
-
+            String newPwd = passwordEncoder.encode(ePw);
             String id = userRepository.findId(postEmailReq.getName(), postEmailReq.getEmail());
-            User user = userRepository.findOne(id);
+            Member user = userRepository.findOne(id);
             user.setPassword(newPwd);
             userRepository.save(user);
         }catch(MailException es){
