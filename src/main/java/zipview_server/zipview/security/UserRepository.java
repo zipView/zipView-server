@@ -73,7 +73,11 @@ public class UserRepository {
 
     }
 
+<<<<<<< HEAD:src/main/java/zipview_server/zipview/security/UserRepository.java
 <<<<<<< Updated upstream:src/main/java/zipview_server/zipview/user/UserRepository.java
+=======
+
+>>>>>>> 05411ae49f77b0abd7462f9d720d7579b583001f:src/main/java/zipview_server/zipview/user/UserRepository.java
     public User findOne(String id) {
         return em.find(User.class,id);
 =======

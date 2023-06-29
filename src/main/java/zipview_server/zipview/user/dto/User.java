@@ -7,7 +7,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
+=======
+import javax.persistence.Column;
+>>>>>>> 05411ae49f77b0abd7462f9d720d7579b583001f
 import javax.persistence.Entity;
 import javax.persistence.Id;
 =======
@@ -36,6 +40,7 @@ public class User {
     }
 
     @Id
+    @Column(name ="user_id")
     private String id;
     private String email;
     private String name;
