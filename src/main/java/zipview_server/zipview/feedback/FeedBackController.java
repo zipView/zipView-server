@@ -1,17 +1,13 @@
 package zipview_server.zipview.feedback;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import zipview_server.config.BaseException;
 import zipview_server.config.BaseResponse;
 import zipview_server.zipview.feedback.dto.*;
 import zipview_server.zipview.security.MemberService;
 import zipview_server.zipview.security.dto.MemberResponseDto;
-import zipview_server.zipview.user.dto.JwtService;
 
 import java.util.List;
-import java.util.UUID;
 
 import static zipview_server.config.BaseResponseStatus.*;
 

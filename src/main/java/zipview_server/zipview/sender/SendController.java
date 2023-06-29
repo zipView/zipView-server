@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import zipview_server.config.BaseResponse;
 import zipview_server.utils.PhoneRegex;
 import zipview_server.zipview.sender.Dto.*;
-import zipview_server.zipview.security.UserRepository;
+import zipview_server.zipview.user.UserRepository;
 
 import javax.persistence.NoResultException;
 import java.io.UnsupportedEncodingException;

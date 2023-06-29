@@ -1,33 +1,15 @@
 package zipview_server.zipview.security;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate;
-import zipview_server.config.BaseException;
+
 import zipview_server.zipview.security.dto.Member;
 import zipview_server.zipview.security.dto.MemberResponseDto;
 import zipview_server.zipview.security.dto.PatchMemberRes;
-import zipview_server.zipview.user.dto.NaverOauthParams;
-import zipview_server.zipview.user.dto.User;
 
-import java.util.List;
-
-import static zipview_server.config.BaseResponseStatus.EXIST_EMAIL;
-import static zipview_server.config.BaseResponseStatus.EXIST_NICKNAME;
 
 
 @Service

@@ -19,11 +19,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-import zipview_server.utils.Encrypt;
 import zipview_server.zipview.security.dto.Member;
 import zipview_server.zipview.sender.Dto.*;
-import zipview_server.zipview.security.UserRepository;
-import zipview_server.zipview.user.dto.User;
+import zipview_server.zipview.user.UserRepository;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
