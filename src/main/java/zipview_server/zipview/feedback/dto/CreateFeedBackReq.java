@@ -2,8 +2,10 @@ package zipview_server.zipview.feedback.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 public class CreateFeedBackReq {
     private String userId;

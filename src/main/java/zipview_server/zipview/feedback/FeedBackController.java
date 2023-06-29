@@ -1,13 +1,13 @@
 package zipview_server.zipview.feedback;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 import zipview_server.config.BaseException;
 import zipview_server.config.BaseResponse;
 import zipview_server.zipview.feedback.dto.*;
+import zipview_server.zipview.security.MemberService;
+import zipview_server.zipview.security.dto.MemberResponseDto;
 import zipview_server.zipview.user.dto.JwtService;
 
 import java.util.List;
@@ -15,35 +15,37 @@ import java.util.UUID;
 
 import static zipview_server.config.BaseResponseStatus.*;
 
-@RequiredArgsConstructor
+
 @RestController
 public class FeedBackController {
+
     private final FeedBackService feedBackService;
     private final FeedBackRepository feedBackRepository;
-    private final JwtService jwtService;
+    private final MemberService memberService;
 
-    @PostMapping("/feedback")
-    public BaseResponse<String> saveUser(@RequestBody CreateFeedBackReq createFeedBackReq) {
+
+    public FeedBackController(FeedBackService feedBackService, FeedBackRepository feedBackRepository, MemberService memberService) {
+        this.feedBackService = feedBackService;
+        this.feedBackRepository = feedBackRepository;
+        this.memberService = memberService;
+    }
+
+    /**
+     * 의견 보내기
+     * @param createFeedBackReq
+     * @return
+     */
+    @PostMapping("/notice/feedback")
+    public BaseResponse<String> postFeedback(@RequestBody CreateFeedBackReq createFeedBackReq) {
         try {
-            Feedback feedBack = new Feedback();
+            MemberResponseDto myInfoBySecurity = memberService.getMyInfoBySecurity();
+            String userId = myInfoBySecurity.getId();
 
-            String uuid = UUID.randomUUID().toString();
-            feedBack.setFb_idx(uuid);
-
-            String userId = jwtService.getUserId();
-            if (jwtService.getJwt().isEmpty()) {
+            if (userId.isEmpty()) {
                 return new BaseResponse<>(EMPTY_JWT);
             }
-            String token = jwtService.getJwt();
-            if (jwtService.validateToken(token) && userId.equals(createFeedBackReq.getUserId())) {
-                feedBack.setFb_type(createFeedBackReq.getType());
-                feedBack.setFb_title(createFeedBackReq.getTitle());
-                feedBack.setFb_content(createFeedBackReq.getContent());
-                feedBack.setFb_email(createFeedBackReq.getEmail());
-            }
-            String id = feedBackService.sendFeedback(feedBack);
 
-            return new BaseResponse<>(id);
+            return new BaseResponse<>(feedBackService.sendFeedback(userId,createFeedBackReq));
 
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
@@ -60,8 +62,13 @@ public class FeedBackController {
         return new BaseResponse<>(notice);
     }
 
-    @PostMapping("/notice/new")
-    public BaseResponse<String> PostNotice(@RequestBody CreateNoticeReq createNoticeReq) throws Exception{
+    /**
+     * 공지 작성
+     * @param createNoticeReq
+     * @return
+     */
+    @PostMapping("/admin/notice/new")
+    public BaseResponse<String> PostNotice(@RequestBody CreateNoticeReq createNoticeReq) {
         try {
             Notice notice = new Notice();
             String title = createNoticeReq.getTitle();

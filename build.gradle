@@ -27,11 +27,19 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-//	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+<<<<<<< HEAD
+<<<<<<< Updated upstream
+=======
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
+>>>>>>> Stashed changes
+=======
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+>>>>>>> 05411ae49f77b0abd7462f9d720d7579b583001f
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -40,16 +48,31 @@ dependencies {
 	implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13'
 	implementation 'com.google.code.gson:gson:2.8.6'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
+<<<<<<< HEAD
+<<<<<<< Updated upstream
+=======
+
+
+=======
 //	implementation 'com.amazonaws:aws-java-sdk-s3:1.11.901'
+>>>>>>> 05411ae49f77b0abd7462f9d720d7579b583001f
 	implementation 'com.querydsl:querydsl-jpa'
 	implementation 'com.querydsl:querydsl-apt'
 //	implementation 'io.awspring.cloud:spring-cloud-starter-aws:2.3.1'
 	implementation 'commons-io:commons-io:2.6'
 
+<<<<<<< HEAD
+	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.2'
+	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.2'
+	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'
+>>>>>>> Stashed changes
+=======
 	compileOnly group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.2'
 	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.2'
 	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'
+>>>>>>> 05411ae49f77b0abd7462f9d720d7579b583001f
 }
+
 
 tasks.named('test') {
 	useJUnitPlatform()
