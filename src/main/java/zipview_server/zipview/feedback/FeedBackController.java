@@ -52,8 +52,8 @@ public class FeedBackController {
     /**
      * 공지사항 조회
      */
-    @GetMapping("/notice")
-    public BaseResponse<List<Notice>> noticeController() throws BaseException {
+    @GetMapping("/notices")
+    public BaseResponse<List<Notice>> noticeController() {
         List<Notice> notice = feedBackRepository.getNotice();
         return new BaseResponse<>(notice);
     }
@@ -66,17 +66,16 @@ public class FeedBackController {
     @PostMapping("/admin/notice/new")
     public BaseResponse<String> PostNotice(@RequestBody CreateNoticeReq createNoticeReq) {
         try {
-            Notice notice = new Notice();
+            MemberResponseDto myInfoBySecurity = memberService.getMyInfoBySecurity();
+            String userId = myInfoBySecurity.getId();
+
             String title = createNoticeReq.getTitle();
             String content = createNoticeReq.getContent();
             if (title == null & content == null) {
                 return new BaseResponse<>(EMPTY_VALUE);
             }
-            notice.setTitle(title);
-            notice.setContent(content);
-            feedBackRepository.saveNotice(notice);
-
-            return new BaseResponse<>("공지 작성 성공!");
+            String idx = feedBackService.sendNotice(userId,createNoticeReq);
+            return new BaseResponse<>(idx+" 번째 공지 작성 성공!" );
 
         } catch (Exception e) {
             return new BaseResponse<>(e.toString());

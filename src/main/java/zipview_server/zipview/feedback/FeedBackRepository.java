@@ -22,6 +22,7 @@ public class FeedBackRepository {
 
     @Transactional
     public void saveNotice(Notice notice){em.persist(notice);}
+
     public List<Notice> getNotice(){
         return em.createQuery("select n from Notice n", Notice.class)
               .getResultList();
