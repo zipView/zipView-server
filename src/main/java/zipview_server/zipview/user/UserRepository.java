@@ -1,10 +1,9 @@
-package zipview_server.zipview.security;
+package zipview_server.zipview.user;
 
 import org.springframework.stereotype.Repository;
 import zipview_server.zipview.security.dto.Member;
 import zipview_server.zipview.sender.Dto.PostEmailReq;
 import zipview_server.zipview.security.dto.PostUserIdReq;
-import zipview_server.zipview.user.dto.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -73,19 +72,11 @@ public class UserRepository {
 
     }
 
-<<<<<<< HEAD:src/main/java/zipview_server/zipview/security/UserRepository.java
-<<<<<<< Updated upstream:src/main/java/zipview_server/zipview/user/UserRepository.java
-=======
-
->>>>>>> 05411ae49f77b0abd7462f9d720d7579b583001f:src/main/java/zipview_server/zipview/user/UserRepository.java
-    public User findOne(String id) {
-        return em.find(User.class,id);
-=======
-
     public Member findOne(String id) {
-        return em.find(Member.class,id);
->>>>>>> Stashed changes:src/main/java/zipview_server/zipview/security/UserRepository.java
+        return em.find(Member.class, id);
     }
+
+
 
 
 }

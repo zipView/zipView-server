@@ -5,7 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 import zipview_server.zipview.feedback.dto.Feedback;
 import zipview_server.zipview.feedback.dto.GetNoticeRes;
 import zipview_server.zipview.feedback.dto.Notice;
-import zipview_server.zipview.user.dto.User;
+
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import zipview_server.dto.req.Review.WriteReviewRequestDto;
 import zipview_server.dto.review.ReviewDto;
-import zipview_server.zipview.user.dto.User;
+
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
