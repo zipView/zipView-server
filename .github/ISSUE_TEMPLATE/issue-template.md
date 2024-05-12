@@ -1,5 +1,5 @@
 ---
-name: Template
+name: Issue Template
 about: Describe this issue template's purpose here.
 title: ''
 labels: ''
@@ -7,5 +7,7 @@ assignees: ''
 
 ---
 
-## Description
-- [ ] todo
+## 목적
+>
+## 작업 상세 내용
+- [ ]
